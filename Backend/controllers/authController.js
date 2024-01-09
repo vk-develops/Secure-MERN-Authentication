@@ -51,4 +51,54 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
-export { registerUser };
+// @desc    Login registered user and generate token
+// @route   POST /api/v1/users/register
+// @access  Public
+
+const loginUser = asyncHandler(async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        //Check for all fields
+        if (!email || !password) {
+            return res
+                .status(400)
+                .json({ success: false, message: "All fields are necessary" });
+        }
+
+        //Check for user
+        const user = await User.findOne({ email });
+        if (user) {
+            //Check for password match
+            const isPasswordMatch = await bcrypt.compare(
+                password,
+                user.password
+            );
+            if (!isPasswordMatch) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Passwords does not match",
+                });
+            } else {
+                //Destructuring the user details
+                const { password, ...resetofUserDetails } = user._doc;
+
+                //Sending Resopnse
+                res.status(200).json({
+                    success: true,
+                    message: "User Login sucesss",
+                    data: resetofUserDetails,
+                });
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ success: false, message: "User does not exists" });
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ success: false, err: err.message });
+    }
+});
+
+export { registerUser, loginUser };
