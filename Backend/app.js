@@ -1,10 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
+import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 //App init
 dotenv.config();
+connectDB();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -18,9 +21,11 @@ app.get("/", (req, res) => {
 });
 
 //API's
-app.use("api/v1/users/", authRoute);
+app.use("/api/v1/users", authRoute);
 
 //Custom Middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 //App listen
 app.listen(PORT, () => {
