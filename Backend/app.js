@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import authRoute from "./routes/authRoute.js";
 
 //App init
 dotenv.config();
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 //API's
+app.use("api/v1/users/", authRoute);
 
 //Custom Middlewares
 
