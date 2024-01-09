@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
 // @desc    Register users & and get a token
 // @route   POST /api/v1/users/register
@@ -35,6 +36,9 @@ const registerUser = asyncHandler(async (req, res) => {
         });
 
         if (user) {
+            //Generating a token after registering
+            generateToken(res, user._id);
+
             //Destructuring the user details
             const { password, ...resetofUserDetails } = user._doc;
 
@@ -80,6 +84,9 @@ const loginUser = asyncHandler(async (req, res) => {
                     message: "Passwords does not match",
                 });
             } else {
+                //Generating a token after logining in
+                generateToken(res, user._id);
+
                 //Destructuring the user details
                 const { password, ...resetofUserDetails } = user._doc;
 
