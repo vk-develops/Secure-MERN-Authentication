@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 8080;
 //Built-in Middlewares and Imported ones
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 //HTTP GET Method Test
 app.get("/", (req, res) => {
