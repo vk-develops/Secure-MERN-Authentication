@@ -2,11 +2,14 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./Router/Router";
 import "./App.css";
+import { AuthProvider } from "./Context/AuthContext";
 
 const App = () => {
     return (
         <BrowserRouter>
-            <Router />
+            <AuthProvider>
+                <Router />
+            </AuthProvider>
         </BrowserRouter>
     );
 };
