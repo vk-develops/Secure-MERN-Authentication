@@ -22,10 +22,12 @@ const RegisterPage = () => {
                 }
             );
 
+            const data = await response.json();
+
             if (response.status === 200) {
-                console.log(import.meta.env.VITE_BACKEND_USERS_URI);
                 console.log("User registration success");
-                const data = await response.json();
+                console.log(data);
+            } else {
                 console.log(data);
             }
         } catch (err) {

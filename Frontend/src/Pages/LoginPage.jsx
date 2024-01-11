@@ -7,7 +7,34 @@ const LoginPage = () => {
     const loginHandler = async (e) => {
         e.preventDefault();
         try {
-        } catch (error) {}
+            const userReq = {
+                email,
+                password,
+            };
+
+            const response = await fetch(
+                `${import.meta.env.VITE_BACKEND_USERS_URI}/login`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userReq),
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.status === 200) {
+                console.log("User login success");
+                console.log(data);
+            } else {
+                console.log(data);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
     };
 
     return (
