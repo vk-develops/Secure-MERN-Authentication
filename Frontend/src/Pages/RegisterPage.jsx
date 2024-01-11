@@ -11,7 +11,7 @@ const RegisterPage = () => {
             const userReq = { name, email, password };
 
             const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_USERS_URI}/register`,
+                `${import.meta.env.VITE_BACKEND_USERS_AUTH_URI}/register`,
                 {
                     method: "POST",
                     credentials: "include",

@@ -13,7 +13,7 @@ const LoginPage = () => {
             };
 
             const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_USERS_URI}/login`,
+                `${import.meta.env.VITE_BACKEND_USERS_AUTH_URI}/login`,
                 {
                     method: "POST",
                     credentials: "include",

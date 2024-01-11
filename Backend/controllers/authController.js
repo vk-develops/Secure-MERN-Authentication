@@ -4,7 +4,7 @@ import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 
 // @desc    Register users & and get a token
-// @route   POST /api/v1/users/register
+// @route   POST /api/v1/users/auth/register
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
     try {
@@ -56,9 +56,8 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Login registered user and generate token
-// @route   POST /api/v1/users/register
+// @route   POST /api/v1/users/auth/register
 // @access  Public
-
 const loginUser = asyncHandler(async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -109,7 +108,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Logout users & clear token
-// @route   POST /api/users/logout
+// @route   POST /api/users/auth/logout
 // @access  Private
 const logoutUser = asyncHandler(async (req, res) => {
     try {

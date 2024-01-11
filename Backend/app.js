@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
+import userRoute from "./routes/userRoute.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 //App init
@@ -28,7 +29,8 @@ app.get("/", (req, res) => {
 });
 
 //API's
-app.use("/api/v1/users", authRoute);
+app.use("/api/v1/users/auth", authRoute);
+app.use("/api/v1/users", userRoute);
 
 //Custom Middlewares
 app.use(notFound);
