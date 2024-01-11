@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const LoginPage = () => {
+    const { setUserData } = useContext(UserContext);
+
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -27,8 +33,8 @@ const LoginPage = () => {
             const data = await response.json();
 
             if (response.status === 200) {
-                console.log("User login success");
-                console.log(data);
+                setUserData();
+                navigate("/");
             } else {
                 console.log(data);
             }

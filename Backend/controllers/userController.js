@@ -6,10 +6,22 @@ import User from "../models/userModel.js";
 // @access  Private
 const isLoggedIn = asyncHandler(async (req, res) => {
     try {
-        res.status(200).json({
-            success: true,
-            message: "Yes, User is loggedin",
-        });
+        //Getting the id from the protect route
+        const id = req.user._id;
+
+        //Find the user
+        const user = await User.findById(id);
+
+        if (user) {
+            //Destructuring the user details
+            const { password, ...resetofUserDetails } = user._doc;
+
+            res.status(200).json({
+                success: true,
+                message: "Yes, User is loggedin",
+                data: resetofUserDetails,
+            });
+        }
     } catch (err) {
         console.log(err.message);
         res.status(500).json({ success: false, err: err.message });
