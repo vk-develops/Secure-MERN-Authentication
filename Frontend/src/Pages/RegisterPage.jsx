@@ -14,12 +14,20 @@ const RegisterPage = () => {
                 `${import.meta.env.VITE_BACKEND_USERS_URI}/register`,
                 {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(userReq),
                 }
             );
+
+            if (response.status === 200) {
+                console.log(import.meta.env.VITE_BACKEND_USERS_URI);
+                console.log("User registration success");
+                const data = await response.json();
+                console.log(data);
+            }
         } catch (err) {
             console.log(err.message);
         }
