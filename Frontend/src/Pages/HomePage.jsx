@@ -1,39 +1,20 @@
 import React, { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
+import NotLoggedInComponent from "../Components/NotLoggedInComponent";
+import useLogout from "../Hooks/useLogout";
 
 const HomePage = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
+
+    const { logout } = useLogout();
 
     const submitHandler = async () => {
-        try {
-            const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_USERS_AUTH_URI}/logout`,
-                {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-
-            // const data = await response.json();
-
-            if (response.status === 200) {
-                console.log("User logout success");
-                setUser(null);
-                console.log(response.message);
-            } else {
-                console.log(response.message);
-            }
-        } catch (err) {
-            console.log(err.message);
-        }
+        await logout();
     };
 
     return (
         <section>
-            <div>HomePage</div>
+            <NotLoggedInComponent />
 
             {!!user && (
                 <>

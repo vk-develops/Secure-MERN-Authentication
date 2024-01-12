@@ -4,6 +4,7 @@ import LoginPage from "../Pages/LoginPage";
 import HomePage from "../Pages/HomePage";
 import RegisterPage from "../Pages/RegisterPage";
 import Layout from "../Components/Layout";
+import NotFoundPage from "../Pages/NotFoundPage";
 
 const Router = () => {
     return (
@@ -25,6 +26,10 @@ const Router = () => {
                     element={<RegisterPage />}
                 />
             </Route>
+            <Route
+                path="*"
+                element={<NotFoundPage />}
+            />
         </Routes>
     );
 };
