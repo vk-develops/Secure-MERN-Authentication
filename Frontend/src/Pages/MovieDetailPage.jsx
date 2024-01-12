@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import MovieDetailCard from "../Components/MovieDetailCard";
 
 const MovieDetailPage = () => {
     const { title } = useParams();
@@ -24,7 +25,11 @@ const MovieDetailPage = () => {
         movieByParams();
     }, [title]);
 
-    return <div>MovieDetailPage</div>;
+    return (
+        <div>
+            <MovieDetailCard />
+        </div>
+    );
 };
 
 export default MovieDetailPage;
