@@ -3,21 +3,63 @@ import { IoSearchOutline } from "react-icons/io5";
 import MovieCard from "./MovieCard";
 import { SearchMovies } from "../Data/data";
 
+const NonSearchComponent = () => {
+    return SearchMovies.map((movie) => (
+        <MovieCard
+            key={movie.imdbID}
+            movieItem={movie}
+        />
+    ));
+};
+
 const LoggedInComponent = () => {
     const [search, setSearch] = useState("");
     const [movies, setMovies] = useState([]);
 
-    // const movieSearch = async () => {
-    //     const response = await fetch(
-    //         `${import.meta.envVITE_MOVIE_APP_URI}&s=${search}`
-    //     );
-    //     const data = await response.json();
-    //     console.log(data);
-    // };
+    const movieSearch = async (e) => {
+        e.preventDefault();
 
-    // useEffect(() => {
-    //     movieSearch();
-    // }, []);
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_MOVIE_APP_URI}&s=${search}`
+            );
+
+            const data = await response.json();
+            console.log(data.Search);
+
+            setMovies(data.Search);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    const SearchComponent = () => {
+        return (
+            <>
+                {movies ? (
+                    movies.map((movie) => (
+                        <>
+                            <MovieCard
+                                key={movie.imdbID}
+                                movieItem={movie}
+                            />
+                        </>
+                    ))
+                ) : (
+                    <>
+                        <h1 className="text-white font-bold text-3xl">
+                            No Movies Found
+                        </h1>
+
+                        <p className="text-slate-400 font-medium text-base">
+                            This may occur if yoy have'nt clicked the search
+                            button or you might have entered a invalid name
+                        </p>
+                    </>
+                )}
+            </>
+        );
+    };
 
     return (
         <div className="h-auto max-w-4xl mx-auto py-10">
@@ -35,23 +77,40 @@ const LoggedInComponent = () => {
                     color="#fff"
                     size={23}
                 />
-                <input
-                    className="w-full text-lg outline-none bg-slate-800 text-white font-medium"
-                    type="text"
-                    placeholder="Search for movies"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+                <form
+                    onSubmit={movieSearch}
+                    className="flex items-center justify-between w-full pr-5"
+                >
+                    <input
+                        className="w-full text-lg outline-none bg-slate-800 text-white font-medium"
+                        type="text"
+                        placeholder="Search for movies (eg: Thor)"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+
+                    <button
+                        className="text-white py-2 px-10 bg-slate-500 font-medium rounded-full"
+                        type="submit"
+                    >
+                        Search
+                    </button>
+                </form>
             </div>
+            {search ? (
+                <h1 className="text-white text-3xl font-bold pt-5">
+                    Search results for {search}...
+                </h1>
+            ) : null}
+
             <div className="grid grid-cols-3 place-items-center my-10 gap-8">
-                {search
-                    ? null
-                    : SearchMovies.map((movie) => (
-                          <MovieCard
-                              key={movie.imdbID}
-                              movieItem={movie}
-                          />
-                      ))}
+                {search ? (
+                    <>
+                        <SearchComponent />
+                    </>
+                ) : (
+                    <NonSearchComponent />
+                )}
             </div>
         </div>
     );

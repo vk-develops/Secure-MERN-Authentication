@@ -3,7 +3,10 @@ import { NavLink } from "react-router-dom";
 
 const MovieCard = ({ movieItem }) => {
     return (
-        <NavLink className="w-full p-3 bg-slate-700 rounded-lg">
+        <NavLink
+            to={`movie/${movieItem.Title}`}
+            className="w-full p-3 bg-slate-700 rounded-lg"
+        >
             <div>
                 <img
                     className="w-full h-72 rounded-md object-cover"
