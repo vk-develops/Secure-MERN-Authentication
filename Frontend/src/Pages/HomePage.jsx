@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import NotLoggedInComponent from "../Components/NotLoggedInComponent";
 import useLogout from "../Hooks/useLogout";
+import LoggedInComponent from "../Components/LoggedInComponent";
 
 const HomePage = () => {
     const { user } = useContext(UserContext);
@@ -14,22 +15,7 @@ const HomePage = () => {
 
     return (
         <section>
-            <NotLoggedInComponent />
-
-            {!!user && (
-                <>
-                    <p>{user.name}</p>
-                    <p>{user.email}</p>
-                    <p>{user.isVerified}</p>
-                    <p>{user.isBanned}</p>
-                    <button
-                        onClick={submitHandler}
-                        className="text-white"
-                    >
-                        Logout
-                    </button>
-                </>
-            )}
+            {user ? <LoggedInComponent /> : <NotLoggedInComponent />}
         </section>
     );
 };
