@@ -4,17 +4,6 @@ import MovieCard from "./MovieCard";
 import { SearchMovies } from "../Data/data";
 import { Link, useSearchParams } from "react-router-dom";
 
-const NonSearchComponent = () => {
-    return SearchMovies.map((movie) => (
-        <Link
-            key={movie.imdbID}
-            to={`movie/${movie.Title}`}
-        >
-            <MovieCard movieItem={movie} />
-        </Link>
-    ));
-};
-
 const LoggedInComponent = () => {
     const [search, setSearch] = useState("");
     const [movies, setMovies] = useState([]);
@@ -62,6 +51,17 @@ const LoggedInComponent = () => {
             getSearchedMovies();
         }
     }, [searchParams]);
+
+    const NonSearchComponent = () => {
+        return SearchMovies.map((movie) => (
+            <Link
+                key={movie.imdbID}
+                to={`movie/${movie.Title}`}
+            >
+                <MovieCard movieItem={movie} />
+            </Link>
+        ));
+    };
 
     const SearchComponent = () => {
         return (
