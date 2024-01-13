@@ -6,10 +6,12 @@ import { Link, useSearchParams } from "react-router-dom";
 
 const NonSearchComponent = () => {
     return SearchMovies.map((movie) => (
-        <MovieCard
+        <Link
             key={movie.imdbID}
-            movieItem={movie}
-        />
+            to={`movie/${movie.Title}`}
+        >
+            <MovieCard movieItem={movie} />
+        </Link>
     ));
 };
 
@@ -66,14 +68,15 @@ const LoggedInComponent = () => {
             <>
                 {movies ? (
                     movies.map((movie) => (
-                        <>
-                            <Link to={`movie/${movie.Title}`}>
-                                <MovieCard
-                                    key={movie.imdbID}
-                                    movieItem={movie}
-                                />
-                            </Link>
-                        </>
+                        <Link
+                            key={movie.imdbID}
+                            to={`movie/${movie.Title}`}
+                            state={{
+                                search: `?${searchParams.toString()}`,
+                            }}
+                        >
+                            <MovieCard movieItem={movie} />
+                        </Link>
                     ))
                 ) : (
                     <>
@@ -134,7 +137,7 @@ const LoggedInComponent = () => {
             ) : null}
 
             <div className="grid grid-cols-3 place-items-center my-10 gap-8">
-                {search ? (
+                {searchedMovie ? (
                     <>
                         <SearchComponent />
                     </>

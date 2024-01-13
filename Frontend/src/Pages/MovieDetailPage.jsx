@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import MovieDetailCard from "../Components/MovieDetailCard";
 
 const MovieDetailPage = () => {
     const { title } = useParams();
+
+    const location = useLocation();
 
     const [movie, setMovie] = useState([]);
 
@@ -29,7 +31,7 @@ const MovieDetailPage = () => {
         <div>
             <div className="max-w-4xl mx-auto py-5 mt-5">
                 <Link
-                    to=".."
+                    to={`..${location.state.search}`}
                     className="bg-slate-700 border-2 border-slate-500 text-slate-300 font-medium text-base py-3 px-12"
                 >
                     Back to home
