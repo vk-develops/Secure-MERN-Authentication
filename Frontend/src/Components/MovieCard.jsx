@@ -1,15 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 
 const MovieCard = ({ movieItem }) => {
     return (
-        <NavLink
-            to={`movie/${movieItem.Title}`}
-            className="w-full p-3 bg-slate-700 rounded-lg"
+        <div
+            style={{ width: "16.5rem" }}
+            className="p-3 bg-slate-700 rounded-lg"
         >
             <div>
                 <img
-                    className="w-full h-72 rounded-md object-cover"
+                    className="w-full h-80 rounded-md object-cover"
                     src={movieItem.Poster}
                     alt="Movie Poster"
                 />
@@ -32,7 +31,7 @@ const MovieCard = ({ movieItem }) => {
                     </h5>
                 </div>
             </div>
-        </NavLink>
+        </div>
     );
 };
 

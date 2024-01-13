@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import MovieCard from "./MovieCard";
 import { SearchMovies } from "../Data/data";
+import { Link, useSearchParams } from "react-router-dom";
 
 const NonSearchComponent = () => {
     return SearchMovies.map((movie) => (
@@ -16,12 +17,32 @@ const LoggedInComponent = () => {
     const [search, setSearch] = useState("");
     const [movies, setMovies] = useState([]);
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchedMovie = searchParams.get("search");
+
+    //Setting the search param
+    function handleParamsChange(key, value) {
+        setSearchParams((prevParams) => {
+            if (value === null) {
+                prevParams.delete(key);
+            } else {
+                prevParams.set(key, value);
+            }
+            return prevParams;
+        });
+    }
+
     const movieSearch = async (e) => {
         e.preventDefault();
 
+        //Setting the search params
+        handleParamsChange("search", search);
+    };
+
+    const getSearchedMovies = async () => {
         try {
             const response = await fetch(
-                `${import.meta.env.VITE_MOVIE_APP_URI}&s=${search}`
+                `${import.meta.env.VITE_MOVIE_APP_URI}&s=${searchedMovie}`
             );
 
             const data = await response.json();
@@ -33,16 +54,25 @@ const LoggedInComponent = () => {
         }
     };
 
+    //Using useEffect to handle the response on change on the search params
+    useEffect(() => {
+        if (searchedMovie) {
+            getSearchedMovies();
+        }
+    }, [searchParams]);
+
     const SearchComponent = () => {
         return (
             <>
                 {movies ? (
                     movies.map((movie) => (
                         <>
-                            <MovieCard
-                                key={movie.imdbID}
-                                movieItem={movie}
-                            />
+                            <Link to={`movie/${movie.Title}`}>
+                                <MovieCard
+                                    key={movie.imdbID}
+                                    movieItem={movie}
+                                />
+                            </Link>
                         </>
                     ))
                 ) : (

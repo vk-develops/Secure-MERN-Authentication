@@ -7,7 +7,7 @@ const MovieDetailCard = ({ movieDetail }) => {
             : "N/A";
 
     return (
-        <div className="h-screen max-w-4xl mx-auto py-5">
+        <div className="h-auto my-5 max-w-4xl mx-auto py-5">
             <div className="w-full bg-slate-800 p-6 rounded-2xl flex items-start gap-5 justify-start">
                 <div className=" w-2/4">
                     <img
