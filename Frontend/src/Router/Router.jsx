@@ -6,6 +6,7 @@ import RegisterPage from "../Pages/RegisterPage";
 import Layout from "../Components/Layout";
 import NotFoundPage from "../Pages/NotFoundPage";
 import MovieDetailPage from "../Pages/MovieDetailPage";
+import ProfilePage from "../Pages/ProfilePage";
 
 const Router = () => {
     return (
@@ -29,6 +30,10 @@ const Router = () => {
                 <Route
                     path="movie/:title"
                     element={<MovieDetailPage />}
+                />
+                <Route
+                    path="profile"
+                    element={<ProfilePage />}
                 />
             </Route>
             <Route

@@ -6,9 +6,6 @@ const MovieDetailPage = () => {
     const { title } = useParams();
 
     const location = useLocation();
-    // const currentLocation = location.state.search;
-    // console.log(location);
-    // console.log(currentLocation);
 
     const search = location.state?.search || "";
 

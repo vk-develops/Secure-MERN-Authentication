@@ -24,7 +24,7 @@ const Header = () => {
                     {user ? (
                         <>
                             <NavLink
-                                to="login"
+                                to="profile"
                                 className={({ isActive }) =>
                                     isActive
                                         ? `text-yellow-400 font-medium text-lg`
