@@ -56,4 +56,42 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 });
 
-export { getUserProfile, isLoggedIn };
+// @desc    Edit users details
+// @route   PUT /api/v1/users/edit-profile
+// @access  Private
+const editProfile = asyncHandler(async (req, res) => {
+    try {
+        const { name, about, phno, address } = req.body;
+
+        const user = await User.findById(req.user._id);
+        if (user) {
+            // Update user profile fields
+            user.name = name || user.name;
+            user.about = about || user.about;
+            user.phno = phno || user.phno;
+            user.address = address || user.address;
+
+            // Save the updated user profile
+            await user.save();
+
+            //Destructuring the user details
+            const { password, ...resetofUserDetails } = user._doc;
+
+            //Sending Resopnse
+            res.status(200).json({
+                success: true,
+                message: "User detials updated",
+                data: resetofUserDetails,
+            });
+        } else {
+            return res
+                .status(400)
+                .json({ success: false, message: "User not found" });
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ success: false, err: err.message });
+    }
+});
+
+export { getUserProfile, isLoggedIn, editProfile };

@@ -19,6 +19,12 @@ const userSchema = mongoose.Schema({
     about: {
         type: String,
     },
+    phno: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
     role: {
         type: String,
         enum: ["User", "Admin"],
