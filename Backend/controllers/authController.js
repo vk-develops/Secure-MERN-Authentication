@@ -41,13 +41,29 @@ const registerUser = asyncHandler(async (req, res) => {
             //Generating a token after registering
             generateToken(res, user._id);
 
+            //Generating OTP
+            const OTP = generateOTP();
+
+            //Hashing the OTP
+            const hashedOTP = await bcrypt.hash(OTP, 10);
+
+            //Saving the OTP in the account verification mnodel
+            const accVerify = new AccountVerification({
+                owner: user._id,
+                otpToken: OTP,
+            });
+
+            //Saving the record
+            await accVerify.save();
+
             //Destructuring the user details
             const { password, ...resetofUserDetails } = user._doc;
 
             //Sending Resopnse
             res.status(200).json({
                 success: true,
-                message: "User registration sucesss",
+                message:
+                    "User registration sucesss, OTP to verify account is send to your mail",
                 data: resetofUserDetails,
             });
         }
@@ -87,21 +103,6 @@ const loginUser = asyncHandler(async (req, res) => {
             } else {
                 //Generating a token after logining in
                 generateToken(res, user._id);
-
-                //Generating OTP
-                const OTP = generateOTP();
-
-                //Hashing the OTP
-                const hashedOTP = await bcrypt.hash(OTP, 10);
-
-                //Saving the OTP in the account verification mnodel
-                const accVerify = new AccountVerification({
-                    owner: user._id,
-                    otpToken: OTP,
-                });
-
-                //Saving the recor
-                await accVerify.save();
 
                 //Destructuring the user details
                 const { password, ...resetofUserDetails } = user._doc;
