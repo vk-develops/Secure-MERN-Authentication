@@ -3,7 +3,10 @@ import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import AccountVerification from "../models/AccountVerificationModel.js";
-import { generateOTP } from "../utils/accountVerificationUtil.js";
+import {
+    generateOTP,
+    mailTransport,
+} from "../utils/accountVerificationUtil.js";
 
 // @desc    Register users & and get a token
 // @route   POST /api/v1/users/auth/register
@@ -50,11 +53,20 @@ const registerUser = asyncHandler(async (req, res) => {
             //Saving the OTP in the account verification mnodel
             const accVerify = new AccountVerification({
                 owner: user._id,
-                otpToken: OTP,
+                otpToken: hashedOTP,
             });
 
             //Saving the record
             await accVerify.save();
+
+            //Sending the OTP to user's mail
+            mailTransport().sendMail({
+                from: "mightier@gmail.com",
+                to: user.email,
+                subject: "Verify your email account",
+                html: `<h3>Hello ${user.name}, congrats for being a user of our app please verify your account </h3>
+                <h1>OTP is: ${OTP}</h1>`,
+            });
 
             //Destructuring the user details
             const { password, ...resetofUserDetails } = user._doc;
@@ -63,7 +75,7 @@ const registerUser = asyncHandler(async (req, res) => {
             res.status(200).json({
                 success: true,
                 message:
-                    "User registration sucesss, OTP to verify account is send to your mail",
+                    "User registration sucesss, Account verification OTP send to your mail",
                 data: resetofUserDetails,
             });
         }
