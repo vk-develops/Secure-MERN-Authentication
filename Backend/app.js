@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
+import accountRoute from "./routes/accountRoute.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 //App init
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 //API's
 app.use("/api/v1/users/auth", authRoute);
 app.use("/api/v1/users", userRoute);
+app.use("/api/v1/users/account", accountRoute);
 
 //Custom Middlewares
 app.use(notFound);

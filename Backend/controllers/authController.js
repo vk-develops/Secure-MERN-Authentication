@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import AccountVerification from "../models/AccountVerificationModel.js";
+import { generateOTP } from "../utils/accountVerificationUtil.js";
 
 // @desc    Register users & and get a token
 // @route   POST /api/v1/users/auth/register
@@ -86,6 +87,21 @@ const loginUser = asyncHandler(async (req, res) => {
             } else {
                 //Generating a token after logining in
                 generateToken(res, user._id);
+
+                //Generating OTP
+                const OTP = generateOTP();
+
+                //Hashing the OTP
+                const hashedOTP = await bcrypt.hash(OTP, 10);
+
+                //Saving the OTP in the account verification mnodel
+                const accVerify = new AccountVerification({
+                    owner: user._id,
+                    otpToken: OTP,
+                });
+
+                //Saving the recor
+                await accVerify.save();
 
                 //Destructuring the user details
                 const { password, ...resetofUserDetails } = user._doc;
