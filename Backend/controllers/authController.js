@@ -102,29 +102,35 @@ const loginUser = asyncHandler(async (req, res) => {
         //Check for user
         const user = await User.findOne({ email });
         if (user) {
-            //Check for password match
-            const isPasswordMatch = await bcrypt.compare(
-                password,
-                user.password
-            );
-            if (!isPasswordMatch) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Passwords does not match",
-                });
+            if (user.isVerified) {
+                //Check for password match
+                const isPasswordMatch = await bcrypt.compare(
+                    password,
+                    user.password
+                );
+                if (!isPasswordMatch) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Passwords does not match",
+                    });
+                } else {
+                    //Generating a token after logining in
+                    generateToken(res, user._id);
+
+                    //Destructuring the user details
+                    const { password, ...resetofUserDetails } = user._doc;
+
+                    //Sending Resopnse
+                    res.status(200).json({
+                        success: true,
+                        message: "User Login sucesss",
+                        data: resetofUserDetails,
+                    });
+                }
             } else {
-                //Generating a token after logining in
-                generateToken(res, user._id);
-
-                //Destructuring the user details
-                const { password, ...resetofUserDetails } = user._doc;
-
-                //Sending Resopnse
-                res.status(200).json({
-                    success: true,
-                    message: "User Login sucesss",
-                    data: resetofUserDetails,
-                });
+                return res
+                    .status(400)
+                    .json({ success: false, message: "User is not verified" });
             }
         } else {
             return res

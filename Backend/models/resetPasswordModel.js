@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const accountVerificationSchema = mongoose.Schema({
+const resetPasswordSchema = mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -17,10 +17,7 @@ const accountVerificationSchema = mongoose.Schema({
     },
 });
 
-const AccountVerification = mongoose.model(
-    "AccountVerification",
-    accountVerificationSchema
-);
+const ResetPassword = mongoose.model("ResetPassword", resetPasswordSchema);
 
 //Export
-export default AccountVerification;
+export default ResetPassword;

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+    const navigate = useNavigate();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -25,8 +28,7 @@ const RegisterPage = () => {
             const data = await response.json();
 
             if (response.status === 200) {
-                console.log("User registration success");
-                console.log(data);
+                navigate("/verify");
             } else {
                 console.log(data);
             }

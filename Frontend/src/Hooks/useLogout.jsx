@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 
 const useLogout = () => {
-    const { setUser } = useContext(UserContext);
+    const { setUser, setLoggedIn } = useContext(UserContext);
 
     const logout = async () => {
         try {
@@ -20,6 +20,7 @@ const useLogout = () => {
             if (response.status === 200) {
                 console.log("User logout success");
                 setUser(null);
+                setLoggedIn(false);
                 console.log(response.message);
             } else {
                 console.log(response.message);

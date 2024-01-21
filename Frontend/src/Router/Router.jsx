@@ -7,6 +7,7 @@ import Layout from "../Components/Layout";
 import NotFoundPage from "../Pages/NotFoundPage";
 import MovieDetailPage from "../Pages/MovieDetailPage";
 import ProfilePage from "../Pages/ProfilePage";
+import VerifyAccountPage from "../Pages/VerifyAccountPage";
 
 const Router = () => {
     return (
@@ -26,6 +27,10 @@ const Router = () => {
                 <Route
                     path="register"
                     element={<RegisterPage />}
+                />
+                <Route
+                    path="verify"
+                    element={<VerifyAccountPage />}
                 />
                 <Route
                     path="movie/:title"

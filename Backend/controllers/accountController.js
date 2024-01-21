@@ -2,7 +2,10 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import AccountVerification from "../models/AccountVerificationModel.js";
-import { mailTransport } from "../utils/accountVerificationUtil.js";
+import {
+    generateOTP,
+    mailTransport,
+} from "../utils/accountVerificationUtil.js";
 
 // @desc    Verify account by entering the OTP recieved
 // @route   POST /api/v1/users/account/verify
@@ -86,4 +89,70 @@ const verifyAccount = asyncHandler(async (req, res) => {
     }
 });
 
-export { verifyAccount };
+// @desc    Resend OTP to verify user's account
+// @route   POST /api/v1/users/account/resend-otp
+// @access  Private
+const resendOTP = asyncHandler(async (req, res) => {
+    try {
+        const id = req.user._id;
+
+        //Check for valid user
+        const user = await User.findById(id);
+        if (user) {
+            //Check for is user already verified
+            if (!user.isVerified) {
+                const verificationRecord = await AccountVerification.findOne({
+                    owner: user._id,
+                });
+
+                if (verificationRecord) {
+                    //Deleting the document if already exists
+                    await verificationRecord.deleteOne();
+                }
+
+                //Generating a new OTP
+                const OTP = generateOTP();
+
+                //Hashing the OTP
+                const hashedOTP = await bcrypt.hash(OTP, 10);
+
+                //Storing user and OTP
+                const accVerify = new AccountVerification({
+                    owner: user._id,
+                    otpToken: hashedOTP,
+                });
+
+                await accVerify.save();
+
+                //Sending the mail
+                mailTransport().sendMail({
+                    from: "mightier@gmail.com",
+                    to: user.email,
+                    subject: "Resend account OTP",
+                    html: `<h1>OTP is ${OTP}</h1>`,
+                });
+
+                //Sending the response
+                res.status(200).json({
+                    success: true,
+                    message: "Resended the OTP to your mail!",
+                });
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "User is already verified, no need to verify again",
+                });
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ success: false, message: "User does not found" });
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ success: false, err: err.message });
+    }
+});
+
+export { verifyAccount, resendOTP };
