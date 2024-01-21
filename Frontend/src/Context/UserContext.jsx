@@ -4,6 +4,7 @@ export const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     //Set user data
     const setUserData = async () => {
@@ -36,8 +37,20 @@ export const UserContextProvider = ({ children }) => {
         setUserData();
     }, []);
 
+    useEffect(() => {
+        const setVerifiedUser = async () => {
+            if (user && user.isVerified) {
+                setLoggedIn(true);
+            }
+        };
+
+        setVerifiedUser();
+    }, [user, setLoggedIn]);
+
     return (
-        <UserContext.Provider value={{ user, setUser, setUserData }}>
+        <UserContext.Provider
+            value={{ user, setUser, setUserData, loggedIn, setLoggedIn }}
+        >
             {children}
         </UserContext.Provider>
     );

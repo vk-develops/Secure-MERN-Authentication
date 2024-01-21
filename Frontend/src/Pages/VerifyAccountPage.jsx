@@ -1,8 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import OtpInput from "react-otp-input";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const VerifyAccountPage = () => {
     const [otp, setOtp] = useState("");
+
+    const { setUserData } = useContext(UserContext);
+
+    const navigate = useNavigate();
+
+    const handleOTP = async () => {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_BACKEND_USER_ACCOUNT_URI}/verify`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ otp }),
+                }
+            );
+
+            //Handling response
+            if (response.ok) {
+                await setUserData();
+                navigate("/");
+            } else {
+                console.log(response.json());
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
 
     return (
         <section className="max-w-xl h-auto mt-16 mb-20 mx-auto">
@@ -39,7 +71,10 @@ const VerifyAccountPage = () => {
                 />
             </div>
             <div className="flex items-center justify-start gap-8 mt-12">
-                <button className="px-12 py-2 rounded-md text-black font-medium text-lg bg-yellow-400">
+                <button
+                    onClick={handleOTP}
+                    className="px-12 py-2 rounded-md text-black font-medium text-lg bg-yellow-400"
+                >
                     Submit
                 </button>
                 <button className="px-8 py-2 rounded-md text-white font-medium text-lg bg-slate-600">
