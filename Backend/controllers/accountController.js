@@ -101,9 +101,10 @@ const resendOTP = asyncHandler(async (req, res) => {
         if (user) {
             //Check for is user already verified
             if (!user.isVerified) {
-                const verificationRecord = await AccountVerification.findById(
-                    id
-                );
+                const verificationRecord = await AccountVerification.findOne({
+                    owner: user._id,
+                });
+
                 if (verificationRecord) {
                     //Deleting the document if already exists
                     await verificationRecord.deleteOne();
