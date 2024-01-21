@@ -36,6 +36,29 @@ const VerifyAccountPage = () => {
         }
     };
 
+    const handleResendOTP = async () => {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_BACKEND_USER_ACCOUNT_URI}/resend-otp`,
+                {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log(data.message);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
     return (
         <section className="max-w-xl h-auto mt-16 mb-20 mx-auto">
             <div className="mt-10">
@@ -77,7 +100,10 @@ const VerifyAccountPage = () => {
                 >
                     Submit
                 </button>
-                <button className="px-8 py-2 rounded-md text-white font-medium text-lg bg-slate-600">
+                <button
+                    onClick={handleResendOTP}
+                    className="px-8 py-2 rounded-md text-white font-medium text-lg bg-slate-600"
+                >
                     Resend OTP
                 </button>
             </div>
