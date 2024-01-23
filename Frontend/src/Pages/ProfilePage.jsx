@@ -34,9 +34,12 @@ const ProfilePage = () => {
                             </h5>
                         </div>
 
-                        <div className="flex items-center justify-start gap-5 my-10">
+                        <div className="flex items-center justify-start gap-5 my-10 flex-wrap">
                             <button className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full">
                                 Edit Profile
+                            </button>
+                            <button className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full">
+                                Reset Password
                             </button>
                             <button className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full">
                                 Logout
