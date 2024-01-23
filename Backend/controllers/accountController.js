@@ -2,10 +2,12 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import User from "../models/userModel.js";
 import AccountVerification from "../models/AccountVerificationModel.js";
+import ResetPassword from "../models/resetPasswordModel.js";
 import {
     generateOTP,
     mailTransport,
 } from "../utils/accountVerificationUtil.js";
+import { generateRandomID } from "../utils/resetPasswordUtil.js";
 
 // @desc    Verify account by entering the OTP recieved
 // @route   POST /api/v1/users/account/verify
@@ -160,6 +162,62 @@ const resendOTP = asyncHandler(async (req, res) => {
 // @access  Public
 const generateResetPasswordLink = asyncHandler(async (req, res) => {
     try {
+        const { email } = req.body;
+
+        //Check for valid email
+        if (!email) {
+            return res
+                .send(400)
+                .json({ success: false, message: "Enter a valid email" });
+        }
+
+        //Check for a valid user
+        const user = await User.findOne({ email });
+        if (user) {
+            //Check for is already requested for password reset
+
+            const resetPasswordModel = await ResetPassword.findOne({
+                owner: user._id,
+            });
+            if (!resetPasswordModel) {
+                //Generating a random unique id
+                const token = generateRandomID();
+
+                //Hashing the link
+                const hashedToken = await bcrypt.hash(token, 10);
+
+                //Creating the document in the DB
+                const resetPassword = new ResetPassword({
+                    owner: user._id,
+                    token: hashedToken,
+                });
+
+                resetPassword.save();
+
+                mailTransport().sendMail({
+                    from: "mightier@gmail.com",
+                    to: user.email,
+                    subject: "Account Password Reset Request",
+                    html: `<h1>${token}</h1>
+                <p>${process.env.FRONTEND_lINK}/reset-password/${user._id}/${token}</p>`,
+                });
+
+                res.status(200).json({
+                    success: true,
+                    message: "Password reset link sent to your mail",
+                });
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Reset link already sent to mail, you can change your password only after 30mins from previous request for password reset.",
+                });
+            }
+        } else {
+            return res
+                .send(400)
+                .json({ success: false, message: "User does not exists" });
+        }
     } catch (err) {
         console.log(err.message);
         res.status(500).json({ success: false, err: err.message });

@@ -6,7 +6,7 @@ const resetPasswordSchema = mongoose.Schema({
         ref: "User",
         required: true,
     },
-    otpToken: {
+    token: {
         type: String,
         required: true,
     },
