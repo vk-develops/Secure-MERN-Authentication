@@ -155,4 +155,15 @@ const resendOTP = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    Send user reset password link
+// @route   POST /api/v1/users/account/reset-password
+// @access  Public
+const generateResetPasswordLink = asyncHandler(async (req, res) => {
+    try {
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ success: false, err: err.message });
+    }
+});
+
 export { verifyAccount, resendOTP };

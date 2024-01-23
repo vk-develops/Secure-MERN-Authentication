@@ -9,4 +9,7 @@ const router = express.Router();
 router.post("/verify", protect, verifyAccount);
 router.get("/resend-otp", protect, resendOTP);
 
+//HTTP Methods for password reset
+router.post("/reset-password");
+
 export default router;
