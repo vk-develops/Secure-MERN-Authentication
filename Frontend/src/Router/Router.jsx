@@ -8,6 +8,8 @@ import NotFoundPage from "../Pages/NotFoundPage";
 import MovieDetailPage from "../Pages/MovieDetailPage";
 import ProfilePage from "../Pages/ProfilePage";
 import VerifyAccountPage from "../Pages/VerifyAccountPage";
+import ResetPasswordPage from "../Pages/ResetPasswordPage";
+import PasswordResetPage from "../Pages/PasswordResetPage";
 
 const Router = () => {
     return (
@@ -39,6 +41,14 @@ const Router = () => {
                 <Route
                     path="profile"
                     element={<ProfilePage />}
+                />
+                <Route
+                    path="account-password-reset"
+                    element={<ResetPasswordPage />}
+                />
+                <Route
+                    path="reset-password/:userId/:uniqueId"
+                    element={<PasswordResetPage />}
                 />
             </Route>
             <Route
