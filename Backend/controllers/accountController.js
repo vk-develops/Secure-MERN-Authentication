@@ -227,6 +227,68 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
 
 // @desc    Verify the reset password link
 // @route   POST /api/v1/users/account/verify-reset-link
-// @access  Public
+// @access  Private
+const resetPassword = asyncHandler(async (req, res) => {
+    try {
+        const { password } = req.body;
 
-export { verifyAccount, resendOTP, generateResetPasswordLink };
+        //Check for all fields
+        if (!password) {
+            return res
+                .status(400)
+                .json({ success: false, message: "Enter a valid password" });
+        }
+
+        //Find user and update password
+        const user = await User.findOne({ _id: req.user._id });
+
+        if (user) {
+            //Check for same password
+            const isSamePassword = await bcrypt.compare(
+                password,
+                user.password
+            );
+            if (!isSamePassword) {
+                //Hashing the new password
+                const hashedPassword = await bcrypt.hash(password, 10);
+
+                //Updating the new password in user's collection and saving
+                user.password = hashedPassword;
+                user.save();
+
+                //Deleting the resetPasssword record
+                await ResetPassword.findByIdAndDelete({ owner: user._id });
+
+                //Sending user email for changing the password
+                mailTransport().sendMail({
+                    from: "mightier@gmail.com",
+                    to: user.email,
+                    subject: "Password reset successfull",
+                    html: `<h1>Hello ${user.name}</h1>
+                    <h4>The password reset for your account was successfull</h4>
+                    <p>If this was'nt done by you immediately contact admin and change your password</p>`,
+                });
+
+                //Sending a response message
+                res.status(200).json({
+                    success: true,
+                    message: "Password reset was successfull",
+                });
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    message: "New password cannot be as same as old password",
+                });
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ success: false, message: "User does not exists" });
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ success: false, err: err.message });
+    }
+});
+
+export { verifyAccount, resendOTP, generateResetPasswordLink, resetPassword };
