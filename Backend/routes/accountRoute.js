@@ -1,5 +1,9 @@
 import express from "express";
-import { resendOTP, verifyAccount } from "../controllers/accountController.js";
+import {
+    generateResetPasswordLink,
+    resendOTP,
+    verifyAccount,
+} from "../controllers/accountController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 
 // router init
@@ -10,6 +14,6 @@ router.post("/verify", protect, verifyAccount);
 router.get("/resend-otp", protect, resendOTP);
 
 //HTTP Methods for password reset
-router.post("/reset-password");
+router.post("/reset-password", generateResetPasswordLink);
 
 export default router;

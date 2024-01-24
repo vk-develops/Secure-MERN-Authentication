@@ -179,6 +179,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
             const resetPasswordModel = await ResetPassword.findOne({
                 owner: user._id,
             });
+
             if (!resetPasswordModel) {
                 //Generating a random unique id
                 const token = generateRandomID();
@@ -224,4 +225,8 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
     }
 });
 
-export { verifyAccount, resendOTP };
+// @desc    Verify the reset password link
+// @route   POST /api/v1/users/account/verify-reset-link
+// @access  Public
+
+export { verifyAccount, resendOTP, generateResetPasswordLink };
