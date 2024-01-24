@@ -8,7 +8,7 @@ const verifyResetPasswordLink = asyncHandler(async (req, res, next) => {
         const { userId, uniqueId } = req.query;
 
         //Check for valid link
-        if (!userId || uniqueId) {
+        if (!userId || !uniqueId) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid link, missing parameters.",
@@ -16,7 +16,7 @@ const verifyResetPasswordLink = asyncHandler(async (req, res, next) => {
         }
 
         //Check for valid user
-        const user = await User.findOne({ userId });
+        const user = await User.findOne({ _id: userId });
         if (user) {
             //Check for valid reset password record or is it expired
             const resetRecord = await ResetPassword.findOne({

@@ -216,7 +216,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
             }
         } else {
             return res
-                .send(400)
+                .status(400)
                 .json({ success: false, message: "User does not exists" });
         }
     } catch (err) {
@@ -257,7 +257,7 @@ const resetPassword = asyncHandler(async (req, res) => {
                 user.save();
 
                 //Deleting the resetPasssword record
-                await ResetPassword.findByIdAndDelete({ owner: user._id });
+                await ResetPassword.findByIdAndDelete(user._id);
 
                 //Sending user email for changing the password
                 mailTransport().sendMail({
