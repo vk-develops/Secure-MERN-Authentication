@@ -200,7 +200,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
                     to: user.email,
                     subject: "Account Password Reset Request",
                     html: `<h1>${token}</h1>
-                <p>${process.env.FRONTEND_lINK}/reset-password/${user._id}/${token}</p>`,
+                <p>${process.env.APP_FRONTEND_LINK}/reset-password/${user._id}/${token}</p>`,
                 });
 
                 res.status(200).json({
