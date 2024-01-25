@@ -1,8 +1,53 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const PasswordResetPage = () => {
+    const { userId, uniqueId } = useParams();
+
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const functionalityHandler = async () => {
+        try {
+            console.log("User", userId);
+            console.log("ID", uniqueId);
+
+            const response = await fetch(
+                `${
+                    import.meta.env.VITE_BACKEND_USER_ACCOUNT_URI
+                }/verify-link?userId=${userId}&uniqueId=${uniqueId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ password }),
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Password reset success");
+                console.log(data);
+            } else {
+                console.log(data);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        if (password === confirmPassword) {
+            console.log("Passwords match");
+            functionalityHandler();
+        } else {
+            console.log("Passwords deosnt match");
+        }
+    };
 
     return (
         <section className="max-w-xl h-screen mx-auto">
@@ -17,7 +62,7 @@ const PasswordResetPage = () => {
                 </p>
             </div>
 
-            <form>
+            <form onSubmit={submitHandler}>
                 <div className="mt-5">
                     <label className="text-base text-slate-300">
                         Password:{" "}

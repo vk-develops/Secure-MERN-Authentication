@@ -3,6 +3,35 @@ import React, { useState } from "react";
 const ResetPasswordPage = () => {
     const [email, setEmail] = useState("");
 
+    const submitHandler = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(
+                `${
+                    import.meta.env.VITE_BACKEND_USER_ACCOUNT_URI
+                }/reset-password`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email }),
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log(data);
+            } else {
+                console.log(data);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
     return (
         <section className="max-w-xl h-screen mx-auto">
             <div className="mt-10">
@@ -16,7 +45,7 @@ const ResetPasswordPage = () => {
                 </p>
             </div>
 
-            <form>
+            <form onSubmit={submitHandler}>
                 <div className="mt-5">
                     <label className="text-base text-slate-300">Email: </label>
                     <input
