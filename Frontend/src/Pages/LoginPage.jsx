@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 
 const LoginPage = () => {
@@ -82,12 +82,21 @@ const LoginPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button
-                        className="py-2 px-12 text-lg font-medium rounded-sm mt-5 bg-yellow-400"
-                        type="submit"
-                    >
-                        Submit
-                    </button>
+                    <div className="flex items-center justify-between">
+                        <button
+                            className="py-2 px-12 text-lg font-medium rounded-sm mt-5 bg-yellow-400"
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+
+                        <Link
+                            to="/account-password-reset"
+                            className="text-white hover:text-yellow-300"
+                        >
+                            Forgot password?
+                        </Link>
+                    </div>
                 </form>
             </div>
         </section>

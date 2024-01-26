@@ -200,7 +200,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
                     to: user.email,
                     subject: "Account Password Reset Request",
                     html: `<h1>${token}</h1>
-                <p>${process.env.FRONTEND_lINK}/reset-password/${user._id}/${token}</p>`,
+                <p>${process.env.APP_FRONTEND_LINK}/reset-password/${user._id}/${token}</p>`,
                 });
 
                 res.status(200).json({
@@ -226,7 +226,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
 });
 
 // @desc    Verify the reset password link
-// @route   POST /api/v1/users/account/verify-reset-link
+// @route   POST /api/v1/users/account/verify-link
 // @access  Private
 const resetPassword = asyncHandler(async (req, res) => {
     try {
@@ -257,7 +257,13 @@ const resetPassword = asyncHandler(async (req, res) => {
                 user.save();
 
                 //Deleting the resetPasssword record
-                await ResetPassword.findByIdAndDelete(user._id);
+                const resetPassRecord = await ResetPassword.findOne({
+                    owner: user._id,
+                });
+                if (resetPassRecord) {
+                    await resetPassRecord.deleteOne();
+                }
+                // await ResetPassword.findByIdAndDelete(user._id);
 
                 //Sending user email for changing the password
                 mailTransport().sendMail({
