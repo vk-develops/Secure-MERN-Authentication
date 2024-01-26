@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
+import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const LoginPage = () => {
     const { setUserData } = useContext(UserContext);
@@ -34,9 +35,10 @@ const LoginPage = () => {
 
             if (response.status === 200) {
                 setUserData();
+                useSuccessToast(data.message);
                 navigate("/");
             } else {
-                console.log(data);
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);

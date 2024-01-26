@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const ResetPasswordPage = () => {
     const [email, setEmail] = useState("");
@@ -23,9 +24,9 @@ const ResetPasswordPage = () => {
             const data = await response.json();
 
             if (response.ok) {
-                console.log(data);
+                useSuccessToast(data.message);
             } else {
-                console.log(data);
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);
