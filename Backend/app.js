@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
 import accountRoute from "./routes/accountRoute.js";
+import adminRoute from "./routes/adminRoute.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 //App init
@@ -34,6 +35,9 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/users/account", accountRoute);
+
+//Admin Api
+app.use("/api/v1/admin", adminRoute);
 
 //Custom Middlewares
 app.use(notFound);
