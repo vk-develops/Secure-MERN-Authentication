@@ -25,4 +25,18 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 });
 
-export { protect };
+const isAdmin = async (req, res, next) => {
+    const currentUser = req.user;
+
+    //Check for is current loggedin user is admin or not
+    if (currentUser.role === "Admin") {
+        next();
+    } else {
+        return res.status(400).json({
+            success: false,
+            message: "Only admins can access this page",
+        });
+    }
+};
+
+export { protect, isAdmin };
