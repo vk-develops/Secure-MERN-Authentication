@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const PasswordResetPage = () => {
     const { userId, uniqueId } = useParams();
@@ -28,10 +29,9 @@ const PasswordResetPage = () => {
             const data = await response.json();
 
             if (response.ok) {
-                console.log("Password reset success");
-                console.log(data);
+                useSuccessToast(data.message);
             } else {
-                console.log(data);
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);
@@ -42,10 +42,9 @@ const PasswordResetPage = () => {
         e.preventDefault();
 
         if (password === confirmPassword) {
-            console.log("Passwords match");
             functionalityHandler();
         } else {
-            console.log("Passwords deosnt match");
+            useErrorToast("Passwords does'nt match.");
         }
     };
 

@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import ResetPassword from "../models/resetPasswordModel.js";
@@ -12,6 +13,13 @@ const verifyResetPasswordLink = asyncHandler(async (req, res, next) => {
             return res.status(400).json({
                 success: false,
                 message: "Invalid link, missing parameters.",
+            });
+        }
+
+        if (!mongoose.isValidObjectId(userId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid user ID format",
             });
         }
 

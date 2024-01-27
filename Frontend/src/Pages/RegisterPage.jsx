@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -28,9 +29,10 @@ const RegisterPage = () => {
             const data = await response.json();
 
             if (response.status === 200) {
+                useSuccessToast(data.message);
                 navigate("/verify");
             } else {
-                console.log(data);
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);

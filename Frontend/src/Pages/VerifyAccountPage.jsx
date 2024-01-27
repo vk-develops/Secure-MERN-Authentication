@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import OtpInput from "react-otp-input";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
+import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const VerifyAccountPage = () => {
     const [otp, setOtp] = useState("");
@@ -24,12 +25,15 @@ const VerifyAccountPage = () => {
                 }
             );
 
+            const data = await response.json();
+
             //Handling response
             if (response.ok) {
                 await setUserData();
+                useSuccessToast(data.message);
                 navigate("/");
             } else {
-                console.log(response.json());
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);
@@ -52,7 +56,9 @@ const VerifyAccountPage = () => {
             const data = await response.json();
 
             if (response.ok) {
-                console.log(data.message);
+                useSuccessToast(data.message);
+            } else {
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);

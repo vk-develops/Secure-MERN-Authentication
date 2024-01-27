@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
+import { useErrorToast, useSuccessToast } from "./useToast";
 
 const useLogout = () => {
     const { setUser, setLoggedIn } = useContext(UserContext);
@@ -17,13 +18,14 @@ const useLogout = () => {
                 }
             );
 
+            const data = await response.json();
+
             if (response.status === 200) {
-                console.log("User logout success");
                 setUser(null);
+                useSuccessToast(data.message);
                 setLoggedIn(false);
-                console.log(response.message);
             } else {
-                console.log(response.message);
+                useErrorToast(data.message);
             }
         } catch (err) {
             console.log(err.message);
