@@ -11,6 +11,7 @@ import VerifyAccountPage from "../Pages/VerifyAccountPage";
 import ResetPasswordPage from "../Pages/ResetPasswordPage";
 import PasswordResetPage from "../Pages/PasswordResetPage";
 import ProtectedRoute from "./ProtectedRoute";
+import AdminPage from "../Pages/Admin/AdminPage";
 
 const Router = () => {
     return (
@@ -63,6 +64,10 @@ const Router = () => {
                 <Route
                     path="reset-password/:userId/:uniqueId"
                     element={<PasswordResetPage />}
+                />
+                <Route
+                    path="admin"
+                    element={<AdminPage />}
                 />
             </Route>
             <Route
