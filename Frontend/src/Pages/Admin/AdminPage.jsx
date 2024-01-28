@@ -62,22 +62,20 @@ const AdminPage = () => {
                     </thead>
                     <tbody>
                         {users.map((user) => (
-                            <>
-                                <tr
-                                    key={user.id}
-                                    className="hover:bg-gray-600 bg-slate-400"
-                                >
-                                    <td className="border border-gray-600 py-2 px-4">
-                                        {user._id}
-                                    </td>
-                                    <td className="border border-gray-600 py-2 px-4">
-                                        {user.name}
-                                    </td>
-                                    <td className="border border-gray-600 py-2 px-4">
-                                        {user.email}
-                                    </td>
-                                </tr>
-                            </>
+                            <tr
+                                key={user._id}
+                                className="hover:bg-gray-600 bg-slate-400"
+                            >
+                                <td className="border border-gray-600 py-2 px-4">
+                                    {user._id}
+                                </td>
+                                <td className="border border-gray-600 py-2 px-4">
+                                    {user.name}
+                                </td>
+                                <td className="border border-gray-600 py-2 px-4">
+                                    {user.email}
+                                </td>
+                            </tr>
                         ))}
                     </tbody>
                 </table>

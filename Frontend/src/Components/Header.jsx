@@ -23,6 +23,19 @@ const Header = () => {
                 <div className="flex items-center justify-center gap-5">
                     {user ? (
                         <>
+                            {user.role === "Admin" && (
+                                <NavLink
+                                    to="admin"
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? `text-yellow-400 font-medium text-lg`
+                                            : `text-white font-medium text-lg`
+                                    }
+                                >
+                                    Admin
+                                </NavLink>
+                            )}
+
                             <NavLink
                                 to="profile"
                                 className={({ isActive }) =>
