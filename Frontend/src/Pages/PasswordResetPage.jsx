@@ -115,7 +115,7 @@ const PasswordResetPage = () => {
                             to a new realm
                         </p>
                         <Link
-                            to="/login"
+                            to="login"
                             className="py-2 px-12 text-lg font-medium rounded-sm bg-yellow-400"
                         >
                             Go to login page
