@@ -10,6 +10,8 @@ import ProfilePage from "../Pages/ProfilePage";
 import VerifyAccountPage from "../Pages/VerifyAccountPage";
 import ResetPasswordPage from "../Pages/ResetPasswordPage";
 import PasswordResetPage from "../Pages/PasswordResetPage";
+import ProtectedRoute from "./ProtectedRoute";
+import AdminPage from "../Pages/Admin/AdminPage";
 
 const Router = () => {
     return (
@@ -34,14 +36,27 @@ const Router = () => {
                     path="verify"
                     element={<VerifyAccountPage />}
                 />
+
                 <Route
                     path="movie/:title"
-                    element={<MovieDetailPage />}
-                />
+                    element={<ProtectedRoute />}
+                >
+                    <Route
+                        index
+                        element={<MovieDetailPage />}
+                    />
+                </Route>
+
                 <Route
                     path="profile"
-                    element={<ProfilePage />}
-                />
+                    element={<ProtectedRoute />}
+                >
+                    <Route
+                        index
+                        element={<ProfilePage />}
+                    />
+                </Route>
+
                 <Route
                     path="account-password-reset"
                     element={<ResetPasswordPage />}
@@ -49,6 +64,10 @@ const Router = () => {
                 <Route
                     path="reset-password/:userId/:uniqueId"
                     element={<PasswordResetPage />}
+                />
+                <Route
+                    path="admin"
+                    element={<AdminPage />}
                 />
             </Route>
             <Route
