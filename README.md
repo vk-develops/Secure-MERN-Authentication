@@ -8,39 +8,36 @@ Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) applic
 
 ## Features
 
----
-
-#### Secure Authentication 🔐
+### Secure Authentication 🔐
 
 -   Movie Matic implements secure authentication using JWT (JSON Web Tokens) and HTTP-only cookies.
 -   Passwords are securely hashed and salted using industry-standard encryption techniques, ensuring user data remains protected.
 -   User sessions are managed using HTTP-only cookies, mitigating the risk of XSS (Cross-Site Scripting) attacks.
 
-#### User Registration and Verification 👤
+### User Registration and Verification 👤
 
 -   Users can register for an account on Movie Matic, providing their name, email address and password.
 -   After registration, users receive an OTP (One-Time Password) via email for account verification.
 -   The OTP expires after 5 minutes to ensure security and prevent unauthorized access.
 -   Users can request a resend of the OTP if needed.
 
-#### Password Reset 🔑
+### Password Reset 🔑
 
 -   Movie Matic offers a hassle-free password reset feature for users who forget their passwords.
 -   Users can access the password reset link via email.
 -   The password reset link expires after 30 minutes for added security.
 
-#### Movie Search and Details 🔍
+### Movie Search and Details 🔍
 
 -   Users can search for movies using the intuitive search feature.
 -   Search results are displayed as vibrant movie cards, providing users with a glimpse into each movie's details.
 -   Users can click on a movie card to access comprehensive movie information, including plot summaries, ratings, cast details, and more.
 
-#### Admin Dashboard 👤
+### Admin Dashboard 👤
 
 -   Movie Matic includes an admin dashboard for administrators to manage user accounts.
 -   Admins have full visibility into user details, enabling them to monitor and manage user accounts effortlessly.
 
----
 
 ## Technologies Used 🌐
 
@@ -54,19 +51,16 @@ Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) applic
 -   Nodemailer: A module for sending emails from Node.js applications.
 -   Tailwind CSS: A front-end framework for developing beautifull user interfaces.
 
----
 
 ## Contributions 🛂
 
 Contributions to Movie Matic are welcome! If you encounter any bugs or have suggestions for improvements, please feel free to open an issue or submit a pull request.
 
----
 
 ## License 🪪
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
----
 
 ## Author 🧑‍💻
 
