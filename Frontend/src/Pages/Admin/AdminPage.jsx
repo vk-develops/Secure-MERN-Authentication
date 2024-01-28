@@ -38,10 +38,10 @@ const AdminPage = () => {
             <div className="mt-10">
                 <h1 className="font-bold text-4xl text-white">Admin Pannel</h1>
                 <p className="font-regular text-base text-slate-400 py-5">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Adipisci quo delectus labore accusamus tempora, aut dolore
-                    ab minus, doloribus, maiores sunt sequi inventore deserunt
-                    natus molestias ea nam commodi corrupti.
+                    Welcome, Admin! Dive into the heart of Movie Matic with our
+                    comprehensive admin dashboard. Here, you have full
+                    visibility into user details, enabling you to manage and
+                    monitor user accounts effortlessly.
                 </p>
             </div>
             <div>
@@ -64,7 +64,7 @@ const AdminPage = () => {
                         {users.map((user) => (
                             <tr
                                 key={user._id}
-                                className="hover:bg-gray-600 bg-slate-400"
+                                className="hover:bg-slate-500 bg-slate-400"
                             >
                                 <td className="border border-gray-600 py-2 px-4">
                                     {user._id}

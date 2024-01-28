@@ -54,9 +54,10 @@ const LoginPage = () => {
                 >
                     <h1 className="font-bold text-4xl text-white">Login</h1>
                     <p className="font-regular text-base text-slate-400 py-5">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quam qui repellendus asperiores at tenetur, voluptas
-                        aliquid saepe voluptates
+                        Welcome back to Movie Matic! Log in to access your
+                        personalized movie experience. With your account, you
+                        can explore our extensive movie library, discover new
+                        favorites, and dive into detailed movie information
                     </p>
                     <div className="mt-5">
                         <label className="text-base text-slate-300">

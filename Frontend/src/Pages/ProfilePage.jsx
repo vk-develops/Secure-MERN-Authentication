@@ -39,9 +39,6 @@ const ProfilePage = () => {
                                 Edit Profile
                             </button>
                             <button className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full">
-                                Reset Password
-                            </button>
-                            <button className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full">
                                 Logout
                             </button>
                         </div>

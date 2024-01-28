@@ -99,10 +99,15 @@ const LoggedInComponent = () => {
             <div>
                 <h3 className="text-white font-bold text-2xl">Movie Search</h3>
                 <p className="text-slate-400 font-regular text-base py-2">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quibusdam adipisci, molestias deleniti quam ad rerum tempora
-                    cum saepe laudantium fuga alias doloribus nisi beatae iste
-                    eaque ipsum. Corrupti, unde deserunt!
+                    Ready to discover your next favorite movie? With Movie
+                    Matic's intuitive search feature, finding the perfect film
+                    is a breeze. Simply enter the title of the movie you're
+                    looking for and click the search button to uncover a world
+                    of cinematic treasures. Explore search results presented as
+                    vibrant movie cards, each offering a glimpse into the
+                    captivating world of cinema. Click on any movie card to
+                    delve deeper into plot summaries, ratings, cast details, and
+                    much more.
                 </p>
             </div>
             <div className="mt-7 w-full rounded-full bg-slate-800 p-3 pl-7 flex items-center justify-start gap-3">

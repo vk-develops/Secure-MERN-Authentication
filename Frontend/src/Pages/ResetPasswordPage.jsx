@@ -40,9 +40,12 @@ const ResetPasswordPage = () => {
                     Reset Password
                 </h1>
                 <p className="font-regular text-base text-slate-400 py-5">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quam qui repellendus asperiores at tenetur, voluptas aliquid
-                    saepe voluptates
+                    Forgot your password? No problem! With Movie Matic's
+                    password reset feature, you can quickly regain access to
+                    your account. Simply enter your email address, and we'll
+                    send you a secure password reset link straight to your
+                    inbox. Follow the link to set a new password and regain
+                    control of your movie-watching experience.
                 </p>
             </div>
 

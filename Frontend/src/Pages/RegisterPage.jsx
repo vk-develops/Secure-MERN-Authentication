@@ -48,9 +48,10 @@ const RegisterPage = () => {
                 >
                     <h1 className="font-bold text-4xl text-white">Register</h1>
                     <p className="font-regular text-base text-slate-400 py-5">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quam qui repellendus asperiores at tenetur, voluptas
-                        aliquid saepe voluptates
+                        Welcome to Movie Matic! Register now to unlock a world
+                        of cinematic exploration. By creating an account, you
+                        gain access to our extensive movie database, where you
+                        can discover and explore your favorite films.
                     </p>
                     <div className="mt-5">
                         <label className="text-base text-slate-300">

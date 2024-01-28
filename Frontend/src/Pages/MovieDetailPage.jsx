@@ -36,7 +36,7 @@ const MovieDetailPage = () => {
                     to={`..${search}`}
                     className="bg-slate-700 border-2 border-slate-500 text-slate-300 font-medium text-base py-3 px-12"
                 >
-                    Back to home
+                    Back to movies
                 </Link>
             </div>
             {movie ? (
