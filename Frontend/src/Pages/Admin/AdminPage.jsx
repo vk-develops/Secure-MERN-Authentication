@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-const ModalComponent = () => {
-    const [modal, setModal] = useState(false);
-
-    const toggleModal = () => {
-        setModal(!modal);
-    };
+const ModalComponent = ({ onCloseModal, userData }) => {
+    const { id, name } = userData;
 
     return (
         <section
@@ -18,7 +14,10 @@ const ModalComponent = () => {
         >
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-36 bg-white p-12">
                 <div className="relative">
-                    <button className="absolute -top-5 right-0">
+                    <button
+                        onClick={onCloseModal}
+                        className="absolute -top-5 right-0"
+                    >
                         <IoClose size={24} />
                     </button>
                 </div>
@@ -26,12 +25,22 @@ const ModalComponent = () => {
                     Confirm Deletion
                 </h1>
                 <p className="font-medium text-base text-slate-600 pt-3">
-                    Are you sure, do you want to delete the user @Username and
-                    ID: @123456789123456789. Once you deleted you cannot revert
-                    your action, make sure before deleting a user
+                    Are you sure, do you want to delete the user{" "}
+                    <span className="text-yellow-600 font-bold capitalize">
+                        "{name}"
+                    </span>{" "}
+                    and ID:
+                    <span className="text-yellow-600 font-bold capitalize">
+                        "{id}"
+                    </span>{" "}
+                    . Once you deleted you cannot revert your action, make sure
+                    before deleting a user
                 </p>
                 <div className="flex items-center justify-end mt-10 gap-4">
-                    <button className="px-8 py-2 bg-slate-500 rounded-md text-base font-medium text-white">
+                    <button
+                        onClick={onCloseModal}
+                        className="px-8 py-2 bg-slate-500 rounded-md text-base font-medium text-white"
+                    >
                         Close
                     </button>
                     <button className="px-8 py-2 bg-teal-500 rounded-md text-base font-medium text-white">
@@ -45,6 +54,14 @@ const ModalComponent = () => {
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedUser, setSelectedUser] = useState({ id: "", name: "" });
+
+    const openModal = (userData) => {
+        setSelectedUser(userData);
+        setShowModal(true);
+    };
 
     const fetchAllUserDetails = async () => {
         try {
@@ -78,7 +95,12 @@ const AdminPage = () => {
 
     return (
         <>
-            <ModalComponent />
+            {showModal && (
+                <ModalComponent
+                    userData={selectedUser}
+                    onCloseModal={() => setShowModal(false)}
+                />
+            )}
             <section className="max-w-3xl h-screen mx-auto">
                 <div className="mt-10">
                     <h1 className="font-bold text-4xl text-white">
@@ -126,7 +148,17 @@ const AdminPage = () => {
                                         {user.email}
                                     </td>
                                     <td className="border border-gray-600 py-2 px-4">
-                                        <button>Delete</button>
+                                        <button
+                                            className=" text-red-900 font-medium"
+                                            onClick={() =>
+                                                openModal({
+                                                    id: user._id,
+                                                    name: user.name,
+                                                })
+                                            }
+                                        >
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
