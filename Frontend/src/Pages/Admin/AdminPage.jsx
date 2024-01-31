@@ -123,7 +123,7 @@ const AdminPage = () => {
 
     useEffect(() => {
         fetchAllUserDetails();
-    }, []);
+    }, [showModal]);
 
     return (
         <>
