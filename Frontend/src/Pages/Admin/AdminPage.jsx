@@ -1,8 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { useErrorToast, useSuccessToast } from "../../Hooks/useToast";
 
 const ModalComponent = ({ onCloseModal, userData }) => {
     const { id, name } = userData;
+
+    const deleteUserHandler = async () => {
+        try {
+            const response = await fetch(
+                `${
+                    import.meta.env.VITE_BACKEND_ADMIN_API_URI
+                }/delete-user?id=${id}`,
+                {
+                    method: "DELETE",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+                onCloseModal();
+                useSuccessToast(data.message);
+            } else {
+                useErrorToast(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <section
@@ -43,7 +72,10 @@ const ModalComponent = ({ onCloseModal, userData }) => {
                     >
                         Close
                     </button>
-                    <button className="px-8 py-2 bg-teal-500 rounded-md text-base font-medium text-white">
+                    <button
+                        onClick={deleteUserHandler}
+                        className="px-8 py-2 bg-teal-500 rounded-md text-base font-medium text-white"
+                    >
                         Yes, Delete
                     </button>
                 </div>
