@@ -61,7 +61,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const editProfile = asyncHandler(async (req, res) => {
     try {
-        const { name, about, phno, address } = req.body;
+        const { name, about, phno, address, profileImg } = req.body;
 
         const user = await User.findById(req.user._id);
         if (user) {
@@ -70,6 +70,7 @@ const editProfile = asyncHandler(async (req, res) => {
             user.about = about || user.about;
             user.phno = phno || user.phno;
             user.address = address || user.address;
+            user.image = profileImg || user.image;
 
             // Save the updated user profile
             await user.save();

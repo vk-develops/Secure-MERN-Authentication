@@ -7,6 +7,7 @@ const EditProfilePage = () => {
     const [name, setName] = useState("");
     const [phno, setPhno] = useState("");
     const [address, setAddress] = useState("");
+    const [about, setAbout] = useState("");
     const [profileImg, setProfileImg] = useState({ myFile: "" });
 
     const submitHandler = async (e) => {
@@ -97,7 +98,7 @@ const EditProfilePage = () => {
                         onChange={(e) => setAddress(e.target.value)}
                     />
                 </div>
-                <div className="mt-5">
+                <div className="my-10">
                     <label className="text-base text-slate-300">
                         Profile image:
                     </label>
@@ -106,6 +107,16 @@ const EditProfilePage = () => {
                         accept=".jpeg, .png, .jpg"
                         onChange={handleFileUpload}
                         className="pl-2"
+                    />
+                </div>
+                <div className="mt-5">
+                    <label className="text-base text-slate-300">About:</label>
+                    <textarea
+                        className="w-full h-48 pt-5 outline-none text-slate-300 py-3 border-slate-300 my-2 border-2 bg-slate-900 px-4 rounded-md"
+                        type="text"
+                        placeholder="Tell about yourself to the world"
+                        value={about}
+                        onChange={(e) => setAbout(e.target.value)}
                     />
                 </div>
                 <div className="flex items-center justify-end">
