@@ -26,7 +26,10 @@ const ProfilePage = () => {
                                 Verified: Yes,
                             </h5>
                             <h5 className="text-slate-300 text-lg font-medium mb-5">
-                                Ph no: 1234567890
+                                Ph no:{" "}
+                                {user && user.phno
+                                    ? `${user.phno}`
+                                    : "9876543210"}
                             </h5>
                             <h5 className="text-slate-300 text-lg font-medium mb-5">
                                 Address: street number (123), street name (Main
@@ -50,7 +53,11 @@ const ProfilePage = () => {
                     <div className="w-2/4">
                         <img
                             className="h-96 w-96 rounded-full object-cover"
-                            src="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi-1704488.jpg&fm=jpg"
+                            src={
+                                user.image
+                                    ? user.image
+                                    : "https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?cs=srgb&dl=pexels-suliman-sallehi-1704488.jpg&fm=jpg"
+                            }
                             alt="Profile image"
                         />
                     </div>

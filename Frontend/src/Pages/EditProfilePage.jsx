@@ -8,7 +8,6 @@ const EditProfilePage = () => {
     const [phno, setPhno] = useState("");
     const [address, setAddress] = useState("");
     const [about, setAbout] = useState("");
-    const [profileImg, setProfileImg] = useState({ myFile: "" });
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -18,11 +17,11 @@ const EditProfilePage = () => {
                 name,
                 phno,
                 address,
-                profileImg,
+                about,
             };
 
             const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_USERS_AUTH_URI}`,
+                `${import.meta.env.VITE_BACKEND_USERS_URI}/edit-profile`,
                 {
                     method: "PUT",
                     credentials: "include",
@@ -32,29 +31,12 @@ const EditProfilePage = () => {
                     body: JSON.stringify(userReq),
                 }
             );
+
+            const data = await response.json();
+            console.log(data);
         } catch (err) {
             console.log(err.message);
         }
-    };
-
-    const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
-        const base64 = await converToBase64(file);
-        setProfileImg({ ...profileImg, myFile: base64 });
-    };
-
-    const converToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-
-            fileReader.readAsDataURL(file);
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-            fileReader.onerror = (error) => {
-                reject(fileReader.error);
-            };
-        });
     };
 
     return (
@@ -68,14 +50,15 @@ const EditProfilePage = () => {
                     and dive into detailed movie information
                 </p>
             </div>
-            <form>
+            <form onSubmit={submitHandler}>
                 <div className="mt-5">
                     <label className="text-base text-slate-300">Name:</label>
                     <input
                         className="w-full outline-none text-slate-300 py-3 border-slate-300 my-2 border-2 bg-slate-900 px-4 rounded-md"
                         type="text"
                         placeholder={`${user.name}`}
-                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div className="mt-5">
@@ -96,17 +79,6 @@ const EditProfilePage = () => {
                         placeholder="Enter your address"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
-                    />
-                </div>
-                <div className="my-10">
-                    <label className="text-base text-slate-300">
-                        Profile image:
-                    </label>
-                    <input
-                        type="file"
-                        accept=".jpeg, .png, .jpg"
-                        onChange={handleFileUpload}
-                        className="pl-2"
                     />
                 </div>
                 <div className="mt-5">
