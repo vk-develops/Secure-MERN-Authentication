@@ -4,18 +4,32 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useErrorToast } from "../Hooks/useToast";
 
 const ProtectedRoute = () => {
-    const { loggedIn } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
-    if (loggedIn) {
+    const Loading = () => {
+        return (
+            <div className="max-w-xl h-screen mx-auto mb-10">
+                <h1 className="text-white pt-32">Loading</h1>
+            </div>
+        );
+    };
+
+    if (user && user.isVerified) {
         return <Outlet />;
     } else {
-        useErrorToast("You need to login.");
-        return (
-            <Navigate
-                to="/login"
-                replace
-            />
-        );
+        if (!user) {
+            // User data is not yet loaded, show loading indicator or handle appropriately
+            return <Loading />;
+        } else {
+            // User is not logged in or not verified, redirect to login page
+            useErrorToast("You need to login.");
+            return (
+                <Navigate
+                    to="/login"
+                    replace
+                />
+            );
+        }
     }
 };
 
