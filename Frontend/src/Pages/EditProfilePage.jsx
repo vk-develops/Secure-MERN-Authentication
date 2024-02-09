@@ -1,7 +1,11 @@
 import React from "react";
 
 const EditProfilePage = () => {
-    return <div>EditProfilePage</div>;
+    return (
+        <section className="max-w-xl h-screen mx-auto">
+            <div></div>
+        </section>
+    );
 };
 
 export default EditProfilePage;
