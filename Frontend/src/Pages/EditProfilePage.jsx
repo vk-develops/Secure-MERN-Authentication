@@ -4,15 +4,41 @@ import { UserContext } from "../Context/UserContext";
 const EditProfilePage = () => {
     const { user } = useContext(UserContext);
 
-    const [name, setName] = useState(`${user.name}`);
+    const [name, setName] = useState("");
     const [phno, setPhno] = useState("");
     const [address, setAddress] = useState("");
     const [profileImg, setProfileImg] = useState({ myFile: "" });
 
+    const submitHandler = async (e) => {
+        e.preventDefault();
+
+        try {
+            const userReq = {
+                name,
+                phno,
+                address,
+                profileImg,
+            };
+
+            const response = await fetch(
+                `${import.meta.env.VITE_BACKEND_USERS_AUTH_URI}`,
+                {
+                    method: "PUT",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(userReq),
+                }
+            );
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
         const base64 = await converToBase64(file);
-        console.log(base64);
         setProfileImg({ ...profileImg, myFile: base64 });
     };
 
