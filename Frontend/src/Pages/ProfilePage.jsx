@@ -1,9 +1,16 @@
 import React, { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import { Link } from "react-router-dom";
+import useLogout from "../Hooks/useLogout";
 
 const ProfilePage = () => {
     const { user } = useContext(UserContext);
+
+    const { logout } = useLogout();
+
+    const handleLogout = async () => {
+        await logout();
+    };
 
     return (
         user && (
@@ -23,6 +30,11 @@ const ProfilePage = () => {
                                 Email: {user.email}
                             </h5>
                             <h5 className="text-slate-300 text-lg font-medium mb-5">
+                                {user && user.about
+                                    ? `About: ${user.about}`
+                                    : null}
+                            </h5>
+                            <h5 className="text-slate-300 text-lg font-medium mb-5">
                                 Verified: Yes,
                             </h5>
                             <h5 className="text-slate-300 text-lg font-medium mb-5">
@@ -32,9 +44,12 @@ const ProfilePage = () => {
                                     : "9876543210"}
                             </h5>
                             <h5 className="text-slate-300 text-lg font-medium mb-5">
-                                Address: street number (123), street name (Main
+                                Address:{" "}
+                                {user && user.address
+                                    ? user.address
+                                    : `Address: street number (123), street name (Main
                                 Street), city (Anytown), state (USA), and zip
-                                code (12345).
+                                code (12345).`}
                             </h5>
                         </div>
 
@@ -45,7 +60,10 @@ const ProfilePage = () => {
                             >
                                 Edit Profile
                             </Link>
-                            <button className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full">
+                            <button
+                                onClick={handleLogout}
+                                className="text-lg font-medium px-10 py-2 bg-slate-500 text-white rounded-full"
+                            >
                                 Logout
                             </button>
                         </div>
