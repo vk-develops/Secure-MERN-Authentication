@@ -44,7 +44,8 @@ const verifyAccount = asyncHandler(async (req, res) => {
                         //Marking user as a verified user
                         user.isVerified = true;
                         await user.save();
-                        //Sending the OTP to user's mail
+
+                        //Sending the success message to user's mail
                         let response = {
                             body: {
                                 name: user.name,
@@ -57,6 +58,7 @@ const verifyAccount = asyncHandler(async (req, res) => {
 
                         let mail = Mailgenerator.generate(response);
 
+                        //Creating the message needed to be sent
                         let message = {
                             from: process.env.GMAIL_EMAIL_ID,
                             to: user.email,
@@ -152,7 +154,7 @@ const resendOTP = asyncHandler(async (req, res) => {
 
                 await accVerify.save();
 
-                //Sending the OTP to user's mail
+                //Sending the resend OTP to user's mail
                 let response = {
                     body: {
                         name: user.name,
@@ -246,7 +248,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
 
                 resetPassword.save();
 
-                //Sending the OTP to user's mail
+                //Sending the reset password link to user's mail
                 let response = {
                     body: {
                         name: user.name,
@@ -260,6 +262,7 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
 
                 let mail = Mailgenerator.generate(response);
 
+                //Creating the message needed to be sent
                 let message = {
                     from: process.env.GMAIL_EMAIL_ID,
                     to: user.email,
@@ -353,6 +356,7 @@ const resetPassword = asyncHandler(async (req, res) => {
 
                 let mail = Mailgenerator.generate(response);
 
+                //Creating the message needed to be sent
                 let message = {
                     from: process.env.GMAIL_EMAIL_ID,
                     to: user.email,

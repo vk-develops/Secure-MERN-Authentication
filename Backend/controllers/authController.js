@@ -74,6 +74,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
             let mail = Mailgenerator.generate(response);
 
+            //Creating the message needed to be sent
             let message = {
                 from: process.env.GMAIL_EMAIL_ID,
                 to: user.email,
