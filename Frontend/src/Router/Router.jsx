@@ -12,6 +12,7 @@ import ResetPasswordPage from "../Pages/ResetPasswordPage";
 import PasswordResetPage from "../Pages/PasswordResetPage";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminPage from "../Pages/Admin/AdminPage";
+import EditProfilePage from "../Pages/EditProfilePage";
 
 const Router = () => {
     return (
@@ -54,6 +55,10 @@ const Router = () => {
                     <Route
                         index
                         element={<ProfilePage />}
+                    />
+                    <Route
+                        path="edit-profile"
+                        element={<EditProfilePage />}
                     />
                 </Route>
 

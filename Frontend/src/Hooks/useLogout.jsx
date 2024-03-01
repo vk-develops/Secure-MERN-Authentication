@@ -1,9 +1,12 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { useErrorToast, useSuccessToast } from "./useToast";
 
 const useLogout = () => {
     const { setUser, setLoggedIn } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const logout = async () => {
         try {
@@ -24,6 +27,7 @@ const useLogout = () => {
                 setUser(null);
                 useSuccessToast(data.message);
                 setLoggedIn(false);
+                navigate("/");
             } else {
                 useErrorToast(data.message);
             }
