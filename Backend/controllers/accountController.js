@@ -6,6 +6,7 @@ import ResetPassword from "../models/resetPasswordModel.js";
 import {
     generateOTP,
     mailTransport,
+    Mailgenerator,
 } from "../utils/accountVerificationUtil.js";
 import { generateRandomID } from "../utils/resetPasswordUtil.js";
 
@@ -44,13 +45,42 @@ const verifyAccount = asyncHandler(async (req, res) => {
                         user.isVerified = true;
                         await user.save();
 
-                        //Sending a succes mail to user
-                        mailTransport().sendMail({
-                            from: "mightier@gmail.com",
+                        //Sending the success message to user's mail
+                        let response = {
+                            body: {
+                                name:
+                                    user.name.charAt(0).toUpperCase() +
+                                    user.name.slice(1),
+                                intro: [
+                                    `Congrats ${user.name}, your account has been verified and you may start using our app for free and get dived into the world of the MovieMatic.`,
+                                ],
+                                outro: "Looking forward to do more business",
+                            },
+                        };
+
+                        let mail = Mailgenerator.generate(response);
+
+                        //Creating the message needed to be sent
+                        let message = {
+                            from: process.env.GMAIL_EMAIL_ID,
                             to: user.email,
-                            subject: "Account Verification Successfull",
-                            html: `<h1>Hello ${user.name}</h1>
-                                    <h4>Thanks for being a part of our team, please explore and enjoy the app designed for you!</h4>`,
+                            subject: "Account Verification Success",
+                            html: mail,
+                        };
+
+                        // Sending the mail and handling the response
+                        mailTransport().sendMail(message, (error, info) => {
+                            if (error) {
+                                console.error(
+                                    "Error occurred while sending email:",
+                                    error
+                                );
+                            } else {
+                                console.log(
+                                    "Email sent successfully:",
+                                    info.response
+                                );
+                            }
                         });
 
                         //Deleting the verification record
@@ -126,12 +156,39 @@ const resendOTP = asyncHandler(async (req, res) => {
 
                 await accVerify.save();
 
-                //Sending the mail
-                mailTransport().sendMail({
-                    from: "mightier@gmail.com",
+                //Sending the resend OTP to user's mail
+                let response = {
+                    body: {
+                        name:
+                            user.name.charAt(0).toUpperCase() +
+                            user.name.slice(1),
+                        intro: [
+                            `Congrats for being a user of our app. Please verify your account.`,
+                            `Your Resended OTP: <strong style="color: #111111;">${OTP}</strong>`,
+                        ],
+                        outro: "Looking forward to do more business",
+                    },
+                };
+
+                let mail = Mailgenerator.generate(response);
+
+                let message = {
+                    from: process.env.GMAIL_EMAIL_ID,
                     to: user.email,
-                    subject: "Resend account OTP",
-                    html: `<h1>OTP is ${OTP}</h1>`,
+                    subject: "Resend OTP",
+                    html: mail,
+                };
+
+                // Sending the mail and handling the response
+                mailTransport().sendMail(message, (error, info) => {
+                    if (error) {
+                        console.error(
+                            "Error occurred while sending email:",
+                            error
+                        );
+                    } else {
+                        console.log("Email sent successfully:", info.response);
+                    }
                 });
 
                 //Sending the response
@@ -195,12 +252,40 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
 
                 resetPassword.save();
 
-                mailTransport().sendMail({
-                    from: "mightier@gmail.com",
+                //Sending the reset password link to user's mail
+                let response = {
+                    body: {
+                        name:
+                            user.name.charAt(0).toUpperCase() +
+                            user.name.slice(1),
+                        intro: [
+                            `You are now reseting your password and this link is only valid for 30 minutes.`,
+                            `Your Reset Password Link: <a href="${process.env.APP_FRONTEND_LINK}/reset-password/${user._id}/${token}" style="color: #111111; font-weight: 600; font-size: 16px;">Reset Password</a>`,
+                        ],
+                        outro: "Looking forward to do more business",
+                    },
+                };
+
+                let mail = Mailgenerator.generate(response);
+
+                //Creating the message needed to be sent
+                let message = {
+                    from: process.env.GMAIL_EMAIL_ID,
                     to: user.email,
-                    subject: "Account Password Reset Request",
-                    html: `<h1>${token}</h1>
-                <p>${process.env.APP_FRONTEND_LINK}/reset-password/${user._id}/${token}</p>`,
+                    subject: "Reset Password Link",
+                    html: mail,
+                };
+
+                // Sending the mail and handling the response
+                mailTransport().sendMail(message, (error, info) => {
+                    if (error) {
+                        console.error(
+                            "Error occurred while sending email:",
+                            error
+                        );
+                    } else {
+                        console.log("Email sent successfully:", info.response);
+                    }
                 });
 
                 res.status(200).json({
@@ -263,16 +348,40 @@ const resetPassword = asyncHandler(async (req, res) => {
                 if (resetPassRecord) {
                     await resetPassRecord.deleteOne();
                 }
-                // await ResetPassword.findByIdAndDelete(user._id);
 
-                //Sending user email for changing the password
-                mailTransport().sendMail({
-                    from: "mightier@gmail.com",
+                //Sending the success message to user's mail
+                let response = {
+                    body: {
+                        name:
+                            user.name.charAt(0).toUpperCase() +
+                            user.name.slice(1),
+                        intro: [
+                            `You have now successfully resetted your password. If this was not done by you please contact admin and change your password immediately.`,
+                        ],
+                        outro: "Looking forward to do more business",
+                    },
+                };
+
+                let mail = Mailgenerator.generate(response);
+
+                //Creating the message needed to be sent
+                let message = {
+                    from: process.env.GMAIL_EMAIL_ID,
                     to: user.email,
-                    subject: "Password reset successfull",
-                    html: `<h1>Hello ${user.name}</h1>
-                    <h4>The password reset for your account was successfull</h4>
-                    <p>If this was'nt done by you immediately contact admin and change your password</p>`,
+                    subject: "Password Reset Success",
+                    html: mail,
+                };
+
+                // Sending the mail and handling the response
+                mailTransport().sendMail(message, (error, info) => {
+                    if (error) {
+                        console.error(
+                            "Error occurred while sending email:",
+                            error
+                        );
+                    } else {
+                        console.log("Email sent successfully:", info.response);
+                    }
                 });
 
                 //Sending a response message

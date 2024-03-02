@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const PasswordResetPage = () => {
+    const navigate = useNavigate();
+
     const { userId, uniqueId } = useParams();
 
     const [password, setPassword] = useState("");
@@ -30,6 +32,7 @@ const PasswordResetPage = () => {
 
             if (response.ok) {
                 useSuccessToast(data.message);
+                navigate("/login");
             } else {
                 useErrorToast(data.message);
             }
@@ -55,9 +58,12 @@ const PasswordResetPage = () => {
                     Reset Password
                 </h1>
                 <p className="font-regular text-base text-slate-400 py-5">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quam qui repellendus asperiores at tenetur, voluptas aliquid
-                    saepe voluptates
+                    Create a new password and take control of your
+                    movie-watching experience. With Movie Matic's streamlined
+                    process, resetting your password is quick and hassle-free.
+                    Plus, rest assured knowing that you're protected – you won't
+                    need to enter your old password. Embrace the freedom to
+                    explore and rediscover movie magic with Movie Matic.
                 </p>
             </div>
 

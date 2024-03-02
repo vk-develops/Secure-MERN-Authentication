@@ -4,6 +4,7 @@ import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import AccountVerification from "../models/AccountVerificationModel.js";
 import {
+    Mailgenerator,
     generateOTP,
     mailTransport,
 } from "../utils/accountVerificationUtil.js";
@@ -60,12 +61,35 @@ const registerUser = asyncHandler(async (req, res) => {
             await accVerify.save();
 
             //Sending the OTP to user's mail
-            mailTransport().sendMail({
-                from: "mightier@gmail.com",
+            let response = {
+                body: {
+                    name:
+                        user.name.charAt(0).toUpperCase() + user.name.slice(1),
+                    intro: [
+                        `Congrats for being a user of our app. Please verify your account.`,
+                        `Your OTP: <strong style="color: #111111;">${OTP}</strong>`,
+                    ],
+                    outro: "Looking forward to do more business",
+                },
+            };
+
+            let mail = Mailgenerator.generate(response);
+
+            //Creating the message needed to be sent
+            let message = {
+                from: process.env.GMAIL_EMAIL_ID,
                 to: user.email,
                 subject: "Verify your email account",
-                html: `<h3>Hello ${user.name}, congrats for being a user of our app please verify your account </h3>
-                <h1>OTP is: ${OTP}</h1>`,
+                html: mail,
+            };
+
+            // Sending the mail and handling the response
+            mailTransport().sendMail(message, (error, info) => {
+                if (error) {
+                    console.error("Error occurred while sending email:", error);
+                } else {
+                    console.log("Email sent successfully:", info.response);
+                }
             });
 
             //Destructuring the user details

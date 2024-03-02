@@ -1,5 +1,6 @@
 import otpGenerator from "otp-generator";
 import nodeMailer from "nodemailer";
+import Mailgen from "mailgen";
 
 const generateOTP = () => {
     //Generating OTP
@@ -13,17 +14,25 @@ const generateOTP = () => {
     return OTP;
 };
 
+//Setting up the mailgen environment
+const Mailgenerator = new Mailgen({
+    theme: "default",
+    product: {
+        name: "MovieMatic",
+        link: "https://mailgen.js/",
+    },
+});
+
 const mailTransport = () => {
     //Mail Host
     return nodeMailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
+        service: "gmail",
         auth: {
-            user: process.env.EMAIL_TRAP_USER_NAME,
-            pass: process.env.EMAIL_TRAP_USER_PASSWORD,
+            user: process.env.GMAIL_EMAIL_ID,
+            pass: process.env.GMAIL_EMAIL_PASSWORD,
         },
     });
 };
 
 //Export
-export { generateOTP, mailTransport };
+export { generateOTP, mailTransport, Mailgenerator };
