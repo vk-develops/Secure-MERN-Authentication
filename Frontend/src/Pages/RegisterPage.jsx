@@ -9,8 +9,16 @@ const RegisterPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const loginHandler = async (e) => {
+    const passwordValidater = (e) => {
         e.preventDefault();
+        if (password.length > 8) {
+            loginHandler();
+        } else {
+            useErrorToast("Password length must be greater than 8");
+        }
+    };
+
+    const loginHandler = async () => {
         try {
             const userReq = { name, email, password };
 
@@ -43,7 +51,7 @@ const RegisterPage = () => {
         <section className="bg-slate-900">
             <div className="max-w-xl h-auto mb-10 mx-auto">
                 <form
-                    onSubmit={loginHandler}
+                    onSubmit={passwordValidater}
                     className="pt-10"
                 >
                     <h1 className="font-bold text-4xl text-white">Register</h1>
@@ -71,7 +79,7 @@ const RegisterPage = () => {
                             Email:{" "}
                         </label>
                         <input
-                            className="w-full outline-none text-slate-300 py-3 border-slate-300 my-2 border-2 bg-slate-900 px-4 rounded-md"
+                            className="w-full placeholder:text-slate-300 outline-none text-slate-300 py-3 border-slate-300 my-2 border-2 bg-slate-900 px-4 rounded-md"
                             type="email"
                             placeholder="Enter your email"
                             required
