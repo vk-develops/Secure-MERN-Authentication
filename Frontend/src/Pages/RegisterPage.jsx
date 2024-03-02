@@ -9,6 +9,15 @@ const RegisterPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const passwordValidater = (e) => {
+        e.preventDefault();
+        if (password.length > 8) {
+            loginHandler();
+        } else {
+            useErrorToast("Password length must be greater than 8");
+        }
+    };
+
     const loginHandler = async (e) => {
         e.preventDefault();
         try {
@@ -43,7 +52,7 @@ const RegisterPage = () => {
         <section className="bg-slate-900">
             <div className="max-w-xl h-auto mb-10 mx-auto">
                 <form
-                    onSubmit={loginHandler}
+                    onSubmit={passwordValidater}
                     className="pt-10"
                 >
                     <h1 className="font-bold text-4xl text-white">Register</h1>
