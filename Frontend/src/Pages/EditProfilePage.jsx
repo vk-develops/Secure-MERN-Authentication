@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../Context/UserContext";
+import { useErrorToast, useSuccessToast } from "../Hooks/useToast";
 
 const EditProfilePage = () => {
     const { user } = useContext(UserContext);
@@ -33,6 +34,13 @@ const EditProfilePage = () => {
             );
 
             const data = await response.json();
+
+            if (response.ok) {
+                useSuccessToast(data.message);
+            } else {
+                useErrorToast(data.message);
+            }
+
             console.log(data);
         } catch (err) {
             console.log(err.message);
