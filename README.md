@@ -11,7 +11,7 @@ Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) applic
 ### Secure Authentication 🔐
 
 -   Movie Matic implements secure authentication using JWT (JSON Web Tokens) and HTTP-only cookies.
--   Passwords are securely hashed and salted using industry-standard encryption techniques, ensuring user data remains protected.
+-   Passwords are securely hashed and salted using standard encryption techniques, ensuring user data remains protected.
 -   User sessions are managed using HTTP-only cookies, mitigating the risk of XSS (Cross-Site Scripting) attacks.
 
 ### User Registration and Verification 👤
