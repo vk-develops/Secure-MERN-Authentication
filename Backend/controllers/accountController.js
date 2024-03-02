@@ -48,7 +48,9 @@ const verifyAccount = asyncHandler(async (req, res) => {
                         //Sending the success message to user's mail
                         let response = {
                             body: {
-                                name: user.name,
+                                name:
+                                    user.name.charAt(0).toUpperCase() +
+                                    user.name.slice(1),
                                 intro: [
                                     `Congrats ${user.name}, your account has been verified and you may start using our app for free and get dived into the world of the MovieMatic.`,
                                 ],
@@ -157,7 +159,9 @@ const resendOTP = asyncHandler(async (req, res) => {
                 //Sending the resend OTP to user's mail
                 let response = {
                     body: {
-                        name: user.name,
+                        name:
+                            user.name.charAt(0).toUpperCase() +
+                            user.name.slice(1),
                         intro: [
                             `Congrats for being a user of our app. Please verify your account.`,
                             `Your Resended OTP: <strong style="color: #111111;">${OTP}</strong>`,
@@ -251,7 +255,9 @@ const generateResetPasswordLink = asyncHandler(async (req, res) => {
                 //Sending the reset password link to user's mail
                 let response = {
                     body: {
-                        name: user.name,
+                        name:
+                            user.name.charAt(0).toUpperCase() +
+                            user.name.slice(1),
                         intro: [
                             `You are now reseting your password and this link is only valid for 30 minutes.`,
                             `Your Reset Password Link: <a href="${process.env.APP_FRONTEND_LINK}/reset-password/${user._id}/${token}" style="color: #111111; font-weight: 600; font-size: 16px;">Reset Password</a>`,
@@ -346,7 +352,9 @@ const resetPassword = asyncHandler(async (req, res) => {
                 //Sending the success message to user's mail
                 let response = {
                     body: {
-                        name: user.name,
+                        name:
+                            user.name.charAt(0).toUpperCase() +
+                            user.name.slice(1),
                         intro: [
                             `You have now successfully resetted your password. If this was not done by you please contact admin and change your password immediately.`,
                         ],

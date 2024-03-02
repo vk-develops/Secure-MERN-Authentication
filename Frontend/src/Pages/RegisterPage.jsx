@@ -18,8 +18,7 @@ const RegisterPage = () => {
         }
     };
 
-    const loginHandler = async (e) => {
-        e.preventDefault();
+    const loginHandler = async () => {
         try {
             const userReq = { name, email, password };
 
@@ -80,7 +79,7 @@ const RegisterPage = () => {
                             Email:{" "}
                         </label>
                         <input
-                            className="w-full outline-none text-slate-300 py-3 border-slate-300 my-2 border-2 bg-slate-900 px-4 rounded-md"
+                            className="w-full placeholder:text-slate-300 outline-none text-slate-300 py-3 border-slate-300 my-2 border-2 bg-slate-900 px-4 rounded-md"
                             type="email"
                             placeholder="Enter your email"
                             required

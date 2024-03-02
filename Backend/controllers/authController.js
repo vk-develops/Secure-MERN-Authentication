@@ -63,7 +63,8 @@ const registerUser = asyncHandler(async (req, res) => {
             //Sending the OTP to user's mail
             let response = {
                 body: {
-                    name: user.name,
+                    name:
+                        user.name.charAt(0).toUpperCase() + user.name.slice(1),
                     intro: [
                         `Congrats for being a user of our app. Please verify your account.`,
                         `Your OTP: <strong style="color: #111111;">${OTP}</strong>`,
