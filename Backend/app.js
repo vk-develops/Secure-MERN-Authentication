@@ -31,6 +31,10 @@ app.get("/", (req, res) => {
     res.status(200).json({ success: true, message: "HTTP Method Success!" });
 });
 
+app.get("/api/v1", (req, res) => {
+    res.status(200).json({ success: true, message: "HTTP Method Success!" });
+});
+
 //API's
 app.use("/api/v1/users/auth", authRoute);
 app.use("/api/v1/users", userRoute);
