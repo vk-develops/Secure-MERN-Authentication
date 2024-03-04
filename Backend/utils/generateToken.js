@@ -6,6 +6,8 @@ const generateToken = (res, userId) => {
             expiresIn: "1d",
         });
 
+        console.log("Generated Token:", token);
+
         // Set cookie
         res.cookie("jwt", token, {
             httpOnly: true,
@@ -14,6 +16,8 @@ const generateToken = (res, userId) => {
             maxAge: 1 * 24 * 60 * 60 * 1000,
             domain: ".vk-develops-movie-matic.vercel.app",
         });
+
+        console.log("Cookie Set Successfully");
     } catch (error) {
         console.error("Error generating token:", error);
     }
