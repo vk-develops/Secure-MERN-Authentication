@@ -12,7 +12,7 @@ const generateToken = (res, userId) => {
         res.cookie("jwt", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "None",
+            sameSite: "strict",
             maxAge: 1 * 24 * 60 * 60 * 1000,
             domain: ".vk-develops-movie-matic.vercel.app",
         });
