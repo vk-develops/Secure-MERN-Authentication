@@ -9,9 +9,10 @@ const generateToken = (res, userId) => {
         // Set cookie
         res.cookie("jwt", token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: true,
             sameSite: "Strict",
             maxAge: 1 * 24 * 60 * 60 * 1000,
+            domain: ".vk-develops-movie-matic.vercel.app",
         });
     } catch (error) {
         console.error("Error generating token:", error);
