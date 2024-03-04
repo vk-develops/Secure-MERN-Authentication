@@ -11,10 +11,9 @@ const generateToken = (res, userId) => {
         // Set cookie
         res.cookie("jwt", token, {
             httpOnly: true,
-            secure: true,
+            secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",
             maxAge: 1 * 24 * 60 * 60 * 1000,
-            domain: ".vk-develops-movie-matic.vercel.app",
         });
 
         console.log("Cookie Set Successfully");
