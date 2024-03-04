@@ -10,12 +10,11 @@ const generateToken = (res, userId) => {
         res.cookie("jwt", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "None", // Adjust as needed based on your scenario
+            sameSite: "Strict",
             maxAge: 1 * 24 * 60 * 60 * 1000,
         });
     } catch (error) {
         console.error("Error generating token:", error);
-        // Handle the error, e.g., return an error response
     }
 };
 
