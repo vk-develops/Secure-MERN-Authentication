@@ -174,6 +174,8 @@ const logoutUser = asyncHandler(async (req, res) => {
     try {
         res.cookie("jwt", "", {
             httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: "None",
             expires: new Date(0),
         });
         res.status(200).json({
