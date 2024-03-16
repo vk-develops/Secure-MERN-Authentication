@@ -19,7 +19,7 @@ const Mailgenerator = new Mailgen({
     theme: "default",
     product: {
         name: "MovieMatic",
-        link: "https://mailgen.js/",
+        link: process.env.APP_FRONTEND_LINK,
     },
 });
 
