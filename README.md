@@ -6,7 +6,7 @@
 
 Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application designed to provide users with a seamless movie-searching experience while ensuring security and privacy through robust authentication mechanisms.
 
-## Features
+## **Features**
 
 ### Secure Authentication 🔐
 
@@ -38,8 +38,7 @@ Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) applic
 
 -   Movie Matic includes an admin dashboard for administrators to manage user accounts.
 -   Admins have full visibility into user details, enabling them to monitor and manage user accounts effortlessly.
-
----
+-   
 
 ## Technologies Used 🌐
 
@@ -53,21 +52,13 @@ Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) applic
 -   Nodemailer: A module for sending emails from Node.js applications.
 -   Tailwind CSS: A front-end framework for developing beautifull user interfaces.
 
-
----
-
 ## Contributions 🛂
 
 Contributions to Movie Matic are welcome! If you encounter any bugs or have suggestions for improvements, please feel free to open an issue or submit a pull request.
 
-
----
-
 ## License 🪪
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
----
 
 ## Author 🧑‍💻
 
