@@ -42,15 +42,15 @@ Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) applic
 
 ## Technologies Used 🌐
 
--   React.js: A JavaScript library used for building user interfaces.
--   Node.js: A JavaScript runtime environment used for server-side development.
--   Express.js: A Node.js web application framework used for server-side logic and routing.
--   MongoDB: A NoSQL database used to store user information and movie data.
--   React Router: A routing library for React applications.
--   JWT (JSON Web Tokens): A secure way to transmit information between parties as a JSON object.
--   bcrypt: A library used for password hashing and salting.
--   Nodemailer: A module for sending emails from Node.js applications.
--   Tailwind CSS: A front-end framework for developing beautifull user interfaces.
+-   **React.js**: A JavaScript library used for building user interfaces.
+-   **Node.js**: A JavaScript runtime environment used for server-side development.
+-   **Express.js**: A Node.js web application framework used for server-side logic and routing.
+-   **MongoDB**: A NoSQL database used to store user information and movie data.
+-   **React Router**: A routing library for React applications.
+-   **JWT (JSON Web Tokens)**: A secure way to transmit information between parties as a JSON object.
+-   **Bcryptjs**: A library used for password hashing and salting.
+-   **Nodemailer**: A module for sending emails from Node.js applications.
+-   **Tailwind CSS**: A front-end framework for developing beautifull user interfaces.
 
 ## Contributions 🛂
 
