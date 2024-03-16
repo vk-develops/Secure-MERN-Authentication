@@ -6,7 +6,7 @@
 
 Movie Matic is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application designed to provide users with a seamless movie-searching experience while ensuring security and privacy through robust authentication mechanisms.
 
-## **Features**
+# **Features**
 
 ### Secure Authentication 🔐
 
