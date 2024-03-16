@@ -6,17 +6,14 @@ const generateToken = (res, userId) => {
             expiresIn: "1d",
         });
 
-        console.log("Generated Token:", token);
-
-        // Set cookie
+        //Sending a cookie
         res.cookie("jwt", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
-            sameSite: "None",
+            sameSite: "strict",
+            // maxAge: 2 * 60 * 1000,
             maxAge: 1 * 24 * 60 * 60 * 1000,
         });
-
-        console.log("Cookie Set Successfully");
     } catch (error) {
         console.error("Error generating token:", error);
     }
